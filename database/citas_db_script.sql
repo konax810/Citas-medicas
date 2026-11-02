@@ -1,5 +1,5 @@
 -- =====================================================================
--- SCRIPT DE CREACIÓN Y CARGA DE DATOS: citas_medicas
+-- SCRIPT DE CREACIÓN Y CARGA DE DATOS: citas_medicas_db
 -- Proyecto Final - Programación Web
 -- =====================================================================
 
@@ -72,7 +72,7 @@ CREATE TABLE citas (
 -- 2. INSERCIÓN DE DATOS (Mínimo 10 registros por tabla)
 -- =====================================================================
 
--- Inserciones en: especialidades
+-- Inserciones en especialidades
 INSERT INTO especialidades (nombre_especialidad, descripcion) VALUES
 ('Cardiología', 'Estudio y tratamiento de las enfermedades del corazón y del aparato circulatorio.'),
 ('Pediatría', 'Atención médica especializada en niños, niñas y adolescentes.'),
@@ -85,7 +85,7 @@ INSERT INTO especialidades (nombre_especialidad, descripcion) VALUES
 ('Psiquiatría', 'Prevención, diagnóstico y tratamiento de trastornos mentales.'),
 ('Odontología', 'Cuidado y salud integral de la cavidad oral y dientes.');
 
--- Inserciones en: servicios_medicos
+-- Inserciones en servicios_medicos
 INSERT INTO servicios_medicos (nombre_servicio, id_especialidad, precio_consulta, duracion_minutos) VALUES
 ('Electrocardiograma', 1, 120000.00, 30),
 ('Control Pediátrico Mensual', 2, 90000.00, 20),
@@ -98,7 +98,7 @@ INSERT INTO servicios_medicos (nombre_servicio, id_especialidad, precio_consulta
 ('Terapia Psicológica Individual', 9, 110000.00, 50),
 ('Limpieza Dental Profunda', 10, 80000.00, 30);
 
--- Inserciones en: pacientes
+-- Inserciones en pacientes
 INSERT INTO pacientes (nombre_paciente, telefono, direccion, email) VALUES
 ('Carlos Pérez', '3101234567', 'Calle 10 # 15-20', 'carlos.perez@email.com'),
 ('María Rodríguez', '3112345678', 'Carrera 5 # 20-30', 'maria.rodriguez@email.com'),
@@ -124,7 +124,7 @@ INSERT INTO medicos (nombre_medico, consultorio, telefono_contacto, email) VALUE
 ('Dr. Gabriel Rojas', 'Consultorio 301', '3209990011', 'gabriel.rojas@email.com'),
 ('Dra. Andrea Jiménez', 'Consultorio 302', '3200001122', 'andrea.jimenez@email.com');
 
--- Inserciones en: citas (Tabla central que une pacientes, servicios y médicos)
+-- Inserciones en citas (Tabla central que une pacientes, servicios y médicos)
 INSERT INTO citas (fecha_hora, id_paciente, id_servicio, id_medico, estado_cita, observaciones) VALUES
 ('2026-11-05 08:00:00', 1, 1, 1, 'Programada', 'Paciente con antecedentes de hipertensión arterial.'),
 ('2026-11-05 09:00:00', 2, 2, 2, 'Programada', 'Control de crecimiento mensual infantil.'),
