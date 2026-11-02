@@ -32,22 +32,37 @@ CREATE TABLE servicios_medicos (
         REFERENCES especialidades(id_especialidad) ON DELETE RESTRICT
 );
 
--- Tabla 3: pacientes
+-- Tabla 3: pacientes (Flexible para niños, adultos y extranjeros)
 CREATE TABLE pacientes (
     id_paciente SERIAL PRIMARY KEY,
-    nombre_paciente VARCHAR(150) NOT NULL,
+	tipo_documento VARCHAR(5) NOT NULL,
+	numero_documento VARCHAR(20) UNIQUE NOT NULL,
+    nombre VARCHAR(100) NOT NULL,
+	apellido VARCHAR(100) NOT NULL,
+	fecha_nacimiento DATE NOT NULL, -- Clave para calcular la edad exacta siempre
     telefono VARCHAR(20),
     direccion VARCHAR(200),
-    email VARCHAR(150) UNIQUE NOT NULL
+    email VARCHAR(150) -- Opcional (NULL) y sin UNIQUE para familias o niños
+
+	-- Restricción estricta de documentos válidos (incluyendo Registro Civil y Tarjeta de Identidad)
+	CONSTRAINT ck_tipo_documento_paciente 
+        CHECK (tipo_documento IN ('CC', 'TI', 'RC', 'CE', 'PA', 'PPT'))
 );
 
 -- Tabla 4: medicos
 CREATE TABLE medicos (
     id_medico SERIAL PRIMARY KEY,
-    nombre_medico VARCHAR(150) NOT NULL,
+	tipo_documento VARCHAR(5) NOT NULL,
+	numero_documento VARCHAR(20) UNIQUE NOT NULL,
+	nombre VARCHAR(100) NOT NULL,
+	apellido VARCHAR(100) NOT NULL,
+	registro_medico VARCHAR(50) UNIQUE NOT NULL,
     consultorio VARCHAR(50) NOT NULL,
     telefono_contacto VARCHAR(20) NOT NULL,
-	email VARCHAR(150) UNIQUE NOT NULL
+	email VARCHAR(150) UNIQUE NOT NULL,
+
+	CONSTRAINT ck_tipo_doc_medico 
+        CHECK (tipo_documento IN ('CC', 'CE', 'PA', 'PPT'))
 );
 
 -- Tabla 5: citas (Tabla central con múltiples llaves foráneas)
@@ -98,31 +113,31 @@ INSERT INTO servicios_medicos (nombre_servicio, id_especialidad, precio_consulta
 ('Terapia Psicológica Individual', 9, 110000.00, 50),
 ('Limpieza Dental Profunda', 10, 80000.00, 30);
 
--- Inserciones en pacientes
-INSERT INTO pacientes (nombre_paciente, telefono, direccion, email) VALUES
-('Carlos Pérez', '3101234567', 'Calle 10 # 15-20', 'carlos.perez@email.com'),
-('María Rodríguez', '3112345678', 'Carrera 5 # 20-30', 'maria.rodriguez@email.com'),
-('Juan Gómez', '3123456789', 'Avenida Circunvalar # 8-12', 'juan.gomez@email.com'),
-('Ana Torres', '3134567890', 'Calle 25 # 3-45', 'ana.torres@email.com'),
-('Luis Martínez', '3145678901', 'Carrera 12 # 45-60', 'luis.martinez@email.com'),
-('Diana Sánchez', '3156789012', 'Calle 8 # 11-22', 'diana.sanchez@email.com'),
-('Pedro Ramírez', '3167890123', 'Carrera 20 # 30-40', 'pedro.ramirez@email.com'),
-('Sofía Herrera', '3178901234', 'Calle 2 # 5-18', 'sofia.herrera@email.com'),
-('Andrés Castro', '3189012345', 'Carrera 7 # 14-88', 'andres.castro@email.com'),
-('Valentina Vargas', '3190123456', 'Calle 30 # 22-10', 'valentina.vargas@email.com');
+-- Inserciones en pacientes (Actualizado con tipo_doc, numero_doc, nombre, apellido y fecha_nacimiento)
+INSERT INTO pacientes (tipo_documento, numero_documento, nombre, apellido, fecha_nacimiento, telefono, direccion, email) VALUES
+('CC', '1001234567', 'Carlos', 'Pérez', '1995-03-12', '3101234567', 'Calle 10 # 15-20', 'carlos.perez@email.com'),
+('CC', '1002345678', 'María', 'Rodríguez', '1990-07-22', '3112345678', 'Carrera 5 # 20-30', 'maria.rodriguez@email.com'),
+('TI', '1003456789', 'Juan', 'Gómez', '2010-05-15', '3123456789', 'Avenida Circunvalar # 8-12', 'juan.gomez@email.com'),
+('CC', '1004567890', 'Ana', 'Torres', '1988-11-04', '3134567890', 'Calle 25 # 3-45', 'ana.torres@email.com'),
+('CC', '1005678901', 'Luis', 'Martínez', '1992-01-30', '3145678901', 'Carrera 12 # 45-60', 'luis.martinez@email.com'),
+('CC', '1006789012', 'Diana', 'Sánchez', '1998-09-18', '3156789012', 'Calle 8 # 11-22', 'diana.sanchez@email.com'),
+('CC', '1007890123', 'Pedro', 'Ramírez', '1985-12-05', '3167890123', 'Carrera 20 # 30-40', 'pedro.ramirez@email.com'),
+('RC', '1008901234', 'Sofía', 'Herrera', '2024-02-10', '3178901234', 'Calle 2 # 5-18', NULL), -- Bebé con Registro Civil y sin correo obligatorio
+('CC', '1009012345', 'Andrés', 'Castro', '1993-06-25', '3189012345', 'Carrera 7 # 14-88', 'andres.castro@email.com'),
+('TI', '1010123456', 'Valentina', 'Vargas', '2012-08-30', '3190123456', 'Calle 30 # 22-10', 'valentina.vargas@email.com');
 
--- Inserciones en medicos
-INSERT INTO medicos (nombre_medico, consultorio, telefono_contacto, email) VALUES
-('Dr. Alberto Mendoza', 'Consultorio 101', '3201112233', 'alberto.mendoza@email.com'),
-('Dra. Elena Ríos', 'Consultorio 102', '3202223344', 'elena.rios@email.com'),
-('Dr. Jorge Cárdenas', 'Consultorio 103', '3203334455', 'jorge.cardenas@email.com'),
-('Dra. Marcela Gómez', 'Consultorio 104', '3204445566', 'marcela.gomez@email.com'),
-('Dr. Ricardo Silva', 'Consultorio 201', '3205556677', 'ricardo.silva@email.com'),
-('Dra. Claudia Patiño', 'Consultorio 202', '3206667788', 'claudia.patino@email.com'),
-('Dr. Fernando Torres', 'Consultorio 203', '3207778899', 'fernando.torres@email.com'),
-('Dra. Lucía Morales', 'Consultorio 204', '3208889900', 'lucia.morales@email.com'),
-('Dr. Gabriel Rojas', 'Consultorio 301', '3209990011', 'gabriel.rojas@email.com'),
-('Dra. Andrea Jiménez', 'Consultorio 302', '3200001122', 'andrea.jimenez@email.com');
+-- Inserciones en medicos (Actualizado con tipo_doc, numero_doc, nombre, apellido y registro_medico)
+INSERT INTO medicos (tipo_documento, numero_documento, nombre, apellido, registro_medico, consultorio, telefono_contacto, email) VALUES
+('CC', '80111222', 'Alberto', 'Mendoza', 'RM-90111', 'Consultorio 101', '3201112233', 'alberto.mendoza@email.com'),
+('CC', '80222333', 'Elena', 'Ríos', 'RM-90222', 'Consultorio 102', '3202223344', 'elena.rios@email.com'),
+('CC', '80333444', 'Jorge', 'Cárdenas', 'RM-90333', 'Consultorio 103', '3203334455', 'jorge.cardenas@email.com'),
+('CC', '80444555', 'Marcela', 'Gómez', 'RM-90444', 'Consultorio 104', '3204445566', 'marcela.gomez@email.com'),
+('CC', '80555666', 'Ricardo', 'Silva', 'RM-90555', 'Consultorio 201', '3205556677', 'ricardo.silva@email.com'),
+('CC', '80666777', 'Claudia', 'Patiño', 'RM-90666', 'Consultorio 202', '3206667788', 'claudia.patino@email.com'),
+('CC', '80777888', 'Fernando', 'Torres', 'RM-90777', 'Consultorio 203', '3207778899', 'fernando.torres@email.com'),
+('CC', '80888999', 'Lucía', 'Morales', 'RM-90888', 'Consultorio 204', '3208889900', 'lucia.morales@email.com'),
+('CC', '80999000', 'Gabriel', 'Rojas', 'RM-90999', 'Consultorio 301', '3209990011', 'gabriel.rojas@email.com'),
+('CC', '80000111', 'Andrea', 'Jiménez', 'RM-90000', 'Consultorio 302', '3200001122', 'andrea.jimenez@email.com');
 
 -- Inserciones en citas (Tabla central que une pacientes, servicios y médicos)
 INSERT INTO citas (fecha_hora, id_paciente, id_servicio, id_medico, estado_cita, observaciones) VALUES
