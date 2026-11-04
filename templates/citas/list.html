@@ -1,0 +1,43 @@
+{% extends "base.html" %}
+{% import "_macros.html" as m %}
+{% block title %}Citas{% endblock %}
+{% block content %}
+{{ m.encabezado('Citas Médicas', 'calendar-check', url_for('citas.crear'), items|length) }}
+<div class="card shadow-sm">
+  <div class="table-responsive">
+    <table class="table table-hover align-middle mb-0">
+      <thead>
+        <tr>
+          <th>ID</th>
+          <th>Fecha y Hora</th>
+          <th>Paciente</th>
+          <th>Servicio</th>
+          <th>Médico</th>
+          <th>Estado</th>
+          <th></th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for c in items %}
+        <tr>
+          <td>{{ c.id_cita }}</td>
+          <td class="text-nowrap">{{ c.fecha_hora.strftime('%d/%m/%Y %H:%M') if c.fecha_hora else '' }}</td>
+          <td class="fw-medium">{{ c.nombre_paciente }} {{ c.apellido_paciente }}</td>
+          <td>{{ c.nombre_servicio }}</td>
+          <td>Dr. {{ c.nombre_medico }} {{ c.apellido_medico }}</td>
+          <td>
+            {% set estado_classes = {'Programada': 'text-bg-warning', 'Atendida': 'text-bg-success', 'Cancelada': 'text-bg-danger'} %}
+            <span class="badge {{ estado_classes.get(c.estado_cita, 'text-bg-secondary') }}">{{ c.estado_cita }}</span>
+          </td>
+          <td>{{ m.acciones(url_for('citas.editar', id=c.id_cita),
+                            url_for('citas.eliminar', id=c.id_cita),
+                            'la cita #' ~ c.id_cita) }}</td>
+        </tr>
+        {% else %}
+          {{ m.sin_registros(7) }}
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+</div>
+{% endblock %}
