@@ -1,0 +1,36 @@
+{% extends "base.html" %}
+{% block title %}Inicio{% endblock %}
+{% block content %}
+<h1 class="h3 mb-1">Panel de la base de datos <code>consultorio_medico_db</code></h1>
+<p class="text-secondary mb-4">Selecciona una tabla para consultar, crear, editar o eliminar registros.</p>
+
+{% set tarjetas = [
+  ('especialidades.listar', 'Especialidades', 'journal-medical', c.especialidades, ''),
+  ('servicios_medicos.listar', 'Servicios Médicos', 'heart-pulse', c.servicios_medicos, ''),
+  ('pacientes.listar', 'Pacientes', 'people', c.pacientes, ''),
+  ('medicos.listar', 'Médicos', 'person-badge-fill', c.medicos, ''),
+  ('citas.listar', 'Citas', 'calendar-check', c.citas, 'citas'),
+] %}
+<div class="row g-3">
+  {% for endpoint, label, icon, n, extra in tarjetas %}
+  <div class="col-6 col-md-4 col-lg">
+    <a class="card-link-full" href="{{ url_for(endpoint) }}">
+      <div class="card card-tabla {{ extra }} h-100">
+        <div class="card-body">
+          <div class="text-secondary"><i class="bi bi-{{ icon }}"></i> {{ label }}</div>
+          <div class="numero">{{ n }}</div>
+          <div class="small text-secondary">registros</div>
+        </div>
+      </div>
+    </a>
+  </div>
+  {% endfor %}
+</div>
+
+<div class="card mt-4">
+  <div class="card-body">
+    <div class="text-secondary">Total de citas programadas</div>
+    <div class="fs-3 fw-semibold">{{ c.citas }} registros activos</div>
+  </div>
+</div>
+{% endblock %}
