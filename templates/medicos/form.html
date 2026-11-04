@@ -1,0 +1,57 @@
+{% extends "base.html" %}
+{% import "_macros.html" as m %}
+{% block title %}{{ titulo }}{% endblock %}
+{% block content %}
+<h1 class="h3 mb-3">{{ titulo }}</h1>
+<div class="card shadow-sm"><div class="card-body">
+  <form method="post" novalidate>
+    <div class="row g-3">
+      <div class="col-md-4">
+        <label for="tipo_documento" class="form-label">Tipo de documento *</label>
+        <select class="form-select" id="tipo_documento" name="tipo_documento" required>
+          <option value="">Seleccione…</option>
+          {% for td in tipos_documento %}
+            <option value="{{ td }}" {{ 'selected' if item.tipo_documento == td }}>{{ td }}</option>
+          {% endfor %}
+        </select>
+      </div>
+      <div class="col-md-8">
+        <label for="numero_documento" class="form-label">Número de documento *</label>
+        <input type="text" class="form-control" id="numero_documento" name="numero_documento"
+               maxlength="20" required value="{{ item.numero_documento or '' }}">
+      </div>
+      <div class="col-md-6">
+        <label for="nombre" class="form-label">Nombre *</label>
+        <input type="text" class="form-control" id="nombre" name="nombre"
+               maxlength="100" required value="{{ item.nombre or '' }}">
+      </div>
+      <div class="col-md-6">
+        <label for="apellido" class="form-label">Apellido *</label>
+        <input type="text" class="form-control" id="apellido" name="apellido"
+               maxlength="100" required value="{{ item.apellido or '' }}">
+      </div>
+      <div class="col-md-6">
+        <label for="registro_medico" class="form-label">Registro médico *</label>
+        <input type="text" class="form-control" id="registro_medico" name="registro_medico"
+               maxlength="50" required value="{{ item.registro_medico or '' }}">
+      </div>
+      <div class="col-md-6">
+        <label for="consultorio" class="form-label">Consultorio *</label>
+        <input type="text" class="form-control" id="consultorio" name="consultorio"
+               maxlength="50" required value="{{ item.consultorio or '' }}">
+      </div>
+      <div class="col-md-6">
+        <label for="telefono_contacto" class="form-label">Teléfono de contacto *</label>
+        <input type="text" class="form-control" id="telefono_contacto" name="telefono_contacto"
+               maxlength="20" required value="{{ item.telefono_contacto or '' }}">
+      </div>
+      <div class="col-md-6">
+        <label for="email" class="form-label">Email *</label>
+        <input type="email" class="form-control" id="email" name="email"
+               maxlength="150" required value="{{ item.email or '' }}">
+      </div>
+    </div>
+    {{ m.botones_form(url_for('medicos.listar')) }}
+  </form>
+</div></div>
+{% endblock %}

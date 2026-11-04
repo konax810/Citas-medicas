@@ -1,0 +1,43 @@
+{% extends "base.html" %}
+{% import "_macros.html" as m %}
+{% block title %}Médicos{% endblock %}
+{% block content %}
+{{ m.encabezado('Médicos', 'person-badge-fill', url_for('medicos.crear'), items|length) }}
+<div class="card shadow-sm">
+  <div class="table-responsive">
+    <table class="table table-hover align-middle mb-0">
+      <thead>
+        <tr>
+          <th>ID</th>
+          <th>Documento</th>
+          <th>Médico</th>
+          <th>Registro médico</th>
+          <th>Consultorio</th>
+          <th>Teléfono</th>
+          <th class="num">Citas</th>
+          <th></th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for m_item in items %}
+        <tr>
+          <td>{{ m_item.id_medico }}</td>
+          <td><span class="badge text-bg-light border">{{ m_item.tipo_documento }}</span> {{ m_item.numero_documento }}</td>
+          <td class="fw-medium">Dr. {{ m_item.nombre }} {{ m_item.apellido }}</td>
+          <td><code>{{ m_item.registro_medico }}</code></td>
+          <td>{{ m_item.consultorio }}</td>
+          <td>{{ m_item.telefono_contacto }}</td>
+          <td class="num">{{ m_item.num_citas }}</td>
+          <td>{{ m.acciones(url_for('medicos.editar', id=m_item.id_medico),
+                            url_for('medicos.eliminar', id=m_item.id_medico),
+                            'al médico ' ~ m_item.nombre ~ ' ' ~ m_item.apellido) }}</td>
+        </tr>
+        {% else %}
+          {{ m.sin_registros(8) }}
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+</div>
+<p class="small text-secondary mt-2">Listado oficial del personal médico registrado en el consultorio.</p>
+{% endblock %}
