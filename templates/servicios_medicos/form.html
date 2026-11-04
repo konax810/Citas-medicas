@@ -1,0 +1,40 @@
+{% extends "base.html" %}
+{% import "_macros.html" as m %}
+{% block title %}{{ titulo }}{% endblock %}
+{% block content %}
+<h1 class="h3 mb-3">{{ titulo }}</h1>
+<div class="card shadow-sm"><div class="card-body">
+  <form method="post" novalidate>
+    <div class="row g-3">
+      <div class="col-md-8">
+        <label for="nombre_servicio" class="form-label">Nombre del servicio *</label>
+        <input type="text" class="form-control" id="nombre_servicio" name="nombre_servicio"
+               maxlength="150" required value="{{ item.nombre_servicio or '' }}">
+      </div>
+      <div class="col-md-4">
+        <label for="id_especialidad" class="form-label">Especialidad *</label>
+        <select class="form-select" id="id_especialidad" name="id_especialidad" required>
+          <option value="">Seleccione…</option>
+          {% for e in especialidades %}
+            <option value="{{ e.id_especialidad }}"
+              {{ 'selected' if item.id_especialidad|string == e.id_especialidad|string }}>
+              {{ e.nombre_especialidad }}</option>
+          {% endfor %}
+        </select>
+      </div>
+      <div class="col-md-6">
+        <label for="precio_consulta" class="form-label">Precio de consulta (COP) *</label>
+        <input type="number" class="form-control" id="precio_consulta" name="precio_consulta"
+               min="0" step="0.01" required
+               value="{{ item.precio_consulta if item.precio_consulta is not none }}">
+      </div>
+      <div class="col-md-6">
+        <label for="duracion_minutos" class="form-label">Duración en minutos *</label>
+        <input type="number" class="form-control" id="duracion_minutos" name="duracion_minutos" min="1" step="1" required
+               value="{{ item.duracion_minutos if item.duracion_minutos is not none }}">
+      </div>
+    </div>
+    {{ m.botones_form(url_for('servicios_medicos.listar')) }}
+  </form>
+</div></div>
+{% endblock %}
