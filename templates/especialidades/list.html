@@ -1,0 +1,36 @@
+{% extends "base.html" %}
+{% import "_macros.html" as m %}
+{% block title %}Especialidades{% endblock %}
+{% block content %}
+{{ m.encabezado('Especialidades', 'journal-medical', url_for('especialidades.crear'), items|length) }}
+<div class="card shadow-sm">
+  <div class="table-responsive">
+    <table class="table table-hover align-middle mb-0">
+      <thead>
+        <tr>
+          <th>ID</th>
+          <th>Nombre</th>
+          <th>Descripción</th>
+          <th class="num">Servicios</th>
+          <th></th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for c in items %}
+        <tr>
+          <td>{{ c.id_especialidad }}</td>
+          <td class="fw-medium">{{ c.nombre_especialidad }}</td>
+          <td class="text-secondary">{{ c.descripcion or '' }}</td>
+          <td class="num">{{ c.num_servicios }}</td>
+          <td>{{ m.acciones(url_for('especialidades.editar', id=c.id_especialidad),
+                            url_for('especialidades.eliminar', id=c.id_especialidad),
+                            'la especialidad ' ~ c.nombre_especialidad) }}</td>
+        </tr>
+        {% else %}
+          {{ m.sin_registros(5) }}
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+</div>
+{% endblock %}
