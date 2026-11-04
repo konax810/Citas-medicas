@@ -1,0 +1,40 @@
+{% extends "base.html" %}
+{% import "_macros.html" as m %}
+{% block title %}Pacientes{% endblock %}
+{% block content %}
+{{ m.encabezado('Pacientes', 'people', url_for('pacientes.crear'), items|length) }}
+<div class="card shadow-sm">
+  <div class="table-responsive">
+    <table class="table table-hover align-middle mb-0">
+      <thead>
+        <tr>
+          <th>ID</th>
+          <th>Documento</th>
+          <th>Paciente</th>
+          <th>Teléfono</th>
+          <th>Email</th>
+          <th class="num">Citas</th>
+          <th></th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for p in items %}
+        <tr>
+          <td>{{ p.id_paciente }}</td>
+          <td><span class="badge text-bg-light border">{{ p.tipo_documento }}</span> {{ p.numero_documento }}</td>
+          <td class="fw-medium">{{ p.nombre }} {{ p.apellido }}</td>
+          <td>{{ p.telefono or '-' }}</td>
+          <td>{% if p.email %}<a href="mailto:{{ p.email }}">{{ p.email }}</a>{% else %}<span class="text-muted">-</span>{% endif %}</td>
+          <td class="num">{{ p.num_citas }}</td>
+          <td>{{ m.acciones(url_for('pacientes.editar', id=p.id_paciente),
+                            url_for('pacientes.eliminar', id=p.id_paciente),
+                            'al paciente ' ~ p.nombre ~ ' ' ~ p.apellido) }}</td>
+        </tr>
+        {% else %}
+          {{ m.sin_registros(7) }}
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+</div>
+{% endblock %}
