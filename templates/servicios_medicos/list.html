@@ -1,0 +1,34 @@
+{% extends "base.html" %}
+{% import "_macros.html" as m %}
+{% block title %}Servicios Médicos{% endblock %}
+{% block content %}
+{{ m.encabezado('Servicios Médicos', 'heart-pulse', url_for('servicios_medicos.crear'), items|length) }}
+<div class="card shadow-sm">
+  <div class="table-responsive">
+    <table class="table table-hover align-middle mb-0">
+      <thead>
+        <tr>
+          <th>ID</th><th>Servicio</th><th>Especialidad</th>
+          <th class="num">Precio consulta</th><th class="num">Duración (min)</th><th></th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for s in items %}
+        <tr>
+          <td>{{ s.id_servicio }}</td>
+          <td class="fw-medium">{{ s.nombre_servicio }}</td>
+          <td><span class="badge text-bg-light border">{{ s.nombre_especialidad }}</span></td>
+          <td class="num">{{ s.precio_consulta|pesos }}</td>
+          <td class="num">{{ s.duracion_minutos }} min</td>
+          <td>{{ m.acciones(url_for('servicios_medicos.editar', id=s.id_servicio),
+                            url_for('servicios_medicos.eliminar', id=s.id_servicio),
+                            'el servicio ' ~ s.nombre_servicio) }}</td>
+        </tr>
+        {% else %}
+          {{ m.sin_registros(6) }}
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+</div>
+{% endblock %}
