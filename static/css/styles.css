@@ -1,0 +1,39 @@
+/* Colores tomados del diagrama del modelo de datos del Consultorio */
+:root {
+  --azul-modelo: #24365f;
+  --naranja-modelo: #b5612a;
+}
+
+.app-navbar { background-color: var(--azul-modelo); }
+
+.btn-primary {
+  --bs-btn-bg: var(--azul-modelo);
+  --bs-btn-border-color: var(--azul-modelo);
+  --bs-btn-hover-bg: #1a2847;
+  --bs-btn-hover-border-color: #1a2847;
+  --bs-btn-active-bg: #1a2847;
+}
+.btn-outline-primary {
+  --bs-btn-color: var(--azul-modelo);
+  --bs-btn-border-color: var(--azul-modelo);
+  --bs-btn-hover-bg: var(--azul-modelo);
+  --bs-btn-hover-border-color: var(--azul-modelo);
+}
+
+.table thead th {
+  background-color: var(--azul-modelo);
+  color: #fff;
+  font-weight: 500;
+  white-space: nowrap;
+}
+
+.card-tabla { border-top: 4px solid var(--azul-modelo); }
+.card-tabla.citas { border-top-color: var(--naranja-modelo); }
+
+.card-tabla .numero { font-size: 2rem; font-weight: 600; color: var(--azul-modelo); }
+.card-tabla.citas .numero { color: var(--naranja-modelo); }
+
+a.card-link-full { text-decoration: none; color: inherit; }
+a.card-link-full:hover .card { box-shadow: 0 .25rem .75rem rgba(0,0,0,.08); }
+
+td.num, th.num { text-align: right; white-space: nowrap; }
