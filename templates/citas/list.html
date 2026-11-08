@@ -14,7 +14,8 @@
           <th>Servicio</th>
           <th>Médico</th>
           <th>Estado</th>
-          <th></th>
+          <th>Observaciones</th>
+          <th></th> <!-- Columna para los botones de editar/eliminar -->
         </tr>
       </thead>
       <tbody>
@@ -29,6 +30,7 @@
             {% set estado_classes = {'Programada': 'text-bg-warning', 'Atendida': 'text-bg-success', 'Cancelada': 'text-bg-danger'} %}
             <span class="badge {{ estado_classes.get(c.estado_cita, 'text-bg-secondary') }}">{{ c.estado_cita }}</span>
           </td>
+          <td>{{ c.observaciones}}</td>
           <td>{{ m.acciones(url_for('citas.editar', id=c.id_cita),
                             url_for('citas.eliminar', id=c.id_cita),
                             'la cita #' ~ c.id_cita) }}</td>
