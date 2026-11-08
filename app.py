@@ -46,6 +46,8 @@ def create_app(config_class=Config):
     db.init_app(app)
     app.add_template_filter(formato_pesos, "pesos")
 
+    app.add_template_filter(calcular_edad, "calcular_edad")
+
     # Registro de Blueprints adaptados al consultorio médico
     for bp in (especialidades_bp, servicios_medicos_bp, pacientes_bp, medicos_bp, citas_bp):
         app.register_blueprint(bp)
