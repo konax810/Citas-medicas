@@ -1,4 +1,5 @@
 """Punto de entrada de la aplicación CRUD consultorio_medico_db."""
+from datetime import date
 import psycopg2
 from flask import Flask, render_template
 
@@ -75,4 +76,4 @@ def create_app(config_class=Config):
 app = create_app()
 
 if __name__ == "__main__":
-    app.run(debug=True, port=5001)
+    app.run(debug=True, port=5000)
