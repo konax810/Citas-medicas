@@ -11,7 +11,12 @@
           <th>ID</th>
           <th>Documento</th>
           <th>Paciente</th>
+          <th>Sexo</th>
+          <th>RH</th><!-- NUEVO -->
+          <th>Fecha de nacimiento</th>
+          <th>Edad</th><!-- NUEVO -->
           <th>Teléfono</th>
+          <th>Dirección</th>
           <th>Email</th>
           <th class="num">Citas</th>
           <th></th>
@@ -23,7 +28,12 @@
           <td>{{ p.id_paciente }}</td>
           <td><span class="badge text-bg-light border">{{ p.tipo_documento }}</span> {{ p.numero_documento }}</td>
           <td class="fw-medium">{{ p.nombre }} {{ p.apellido }}</td>
+          <td>{{ p.sexo}}</td>
+          <td>{{ p.rh }}</td>
+          <td>{{ p.fecha_nacimiento}}</td>
+          <td>{{ p.fecha_nacimiento | calcular_edad}}</td>
           <td>{{ p.telefono or '-' }}</td>
+          <td>{{ p.direccion or '-' }}</td>
           <td>{% if p.email %}<a href="mailto:{{ p.email }}">{{ p.email }}</a>{% else %}<span class="text-muted">-</span>{% endif %}</td>
           <td class="num">{{ p.num_citas }}</td>
           <td>{{ m.acciones(url_for('pacientes.editar', id=p.id_paciente),
