@@ -17,6 +17,26 @@ def formato_pesos(valor):
         return ""
     return "$ " + f"{float(valor):,.0f}".replace(",", ".")
 
+def calcular_edad(fecha_nacimiento):
+    """Filtro Jinja: Calcula la edad o meses de forma blindada para pacientes."""
+    if not fecha_nacimiento:
+        return "N/A"
+
+    hoy = date.today()
+
+    if fecha_nacimiento > hoy:
+        return "Fecha inválida"
+
+    edad = (hoy.year- fecha_nacimiento.year- ((hoy.month, hoy.day)< (fecha_nacimiento.month, fecha_nacimiento.day)))
+
+    if edad == 0:
+        meses = (hoy.year - fecha_nacimiento.year) * 12 + (hoy.month - fecha_nacimiento.month)
+        if meses <= 0:
+            return "Recién nacido"
+        return f"{meses} meses"
+
+    return f"{edad} años"
+
 
 def create_app(config_class=Config):
     app = Flask(__name__)
