@@ -2,12 +2,12 @@
 -- PostgreSQL database dump
 --
 
-\restrict dve9dkZvtOBCLLY60Z7Ps3Uf7SuElY2znZJBBNyDdkZ90tO6JB5GakJShtk2IDv
+\restrict BJMf0fAKlOuCHc22kBBa2StP1fYN09doY2qHIVTjxOWQWDthMuiIu7B3cDAZnVz
 
 -- Dumped from database version 17.11
 -- Dumped by pg_dump version 17.11
 
--- Started on 2026-11-01 21:13:29
+-- Started on 2026-11-08 10:26:17
 
 SET statement_timeout = 0;
 SET lock_timeout = 0;
@@ -26,7 +26,7 @@ SET default_tablespace = '';
 SET default_table_access_method = heap;
 
 --
--- TOC entry 226 (class 1259 OID 57880)
+-- TOC entry 226 (class 1259 OID 65787)
 -- Name: citas; Type: TABLE; Schema: public; Owner: postgres
 --
 
@@ -45,7 +45,7 @@ CREATE TABLE public.citas (
 ALTER TABLE public.citas OWNER TO postgres;
 
 --
--- TOC entry 225 (class 1259 OID 57879)
+-- TOC entry 225 (class 1259 OID 65786)
 -- Name: citas_id_cita_seq; Type: SEQUENCE; Schema: public; Owner: postgres
 --
 
@@ -61,7 +61,7 @@ CREATE SEQUENCE public.citas_id_cita_seq
 ALTER SEQUENCE public.citas_id_cita_seq OWNER TO postgres;
 
 --
--- TOC entry 4957 (class 0 OID 0)
+-- TOC entry 4958 (class 0 OID 0)
 -- Dependencies: 225
 -- Name: citas_id_cita_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
 --
@@ -70,7 +70,7 @@ ALTER SEQUENCE public.citas_id_cita_seq OWNED BY public.citas.id_cita;
 
 
 --
--- TOC entry 218 (class 1259 OID 57827)
+-- TOC entry 218 (class 1259 OID 65735)
 -- Name: especialidades; Type: TABLE; Schema: public; Owner: postgres
 --
 
@@ -84,7 +84,7 @@ CREATE TABLE public.especialidades (
 ALTER TABLE public.especialidades OWNER TO postgres;
 
 --
--- TOC entry 217 (class 1259 OID 57826)
+-- TOC entry 217 (class 1259 OID 65734)
 -- Name: especialidades_id_especialidad_seq; Type: SEQUENCE; Schema: public; Owner: postgres
 --
 
@@ -100,7 +100,7 @@ CREATE SEQUENCE public.especialidades_id_especialidad_seq
 ALTER SEQUENCE public.especialidades_id_especialidad_seq OWNER TO postgres;
 
 --
--- TOC entry 4958 (class 0 OID 0)
+-- TOC entry 4959 (class 0 OID 0)
 -- Dependencies: 217
 -- Name: especialidades_id_especialidad_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
 --
@@ -109,7 +109,7 @@ ALTER SEQUENCE public.especialidades_id_especialidad_seq OWNED BY public.especia
 
 
 --
--- TOC entry 224 (class 1259 OID 57864)
+-- TOC entry 224 (class 1259 OID 65773)
 -- Name: medicos; Type: TABLE; Schema: public; Owner: postgres
 --
 
@@ -120,7 +120,7 @@ CREATE TABLE public.medicos (
     nombre character varying(100) NOT NULL,
     apellido character varying(100) NOT NULL,
     registro_medico character varying(50) NOT NULL,
-    consultorio character varying(50) NOT NULL,
+    consultorio character varying(10) NOT NULL,
     telefono_contacto character varying(20) NOT NULL,
     email character varying(150) NOT NULL,
     CONSTRAINT ck_tipo_doc_medico CHECK (((tipo_documento)::text = ANY ((ARRAY['CC'::character varying, 'CE'::character varying, 'PA'::character varying, 'PPT'::character varying])::text[])))
@@ -130,7 +130,7 @@ CREATE TABLE public.medicos (
 ALTER TABLE public.medicos OWNER TO postgres;
 
 --
--- TOC entry 223 (class 1259 OID 57863)
+-- TOC entry 223 (class 1259 OID 65772)
 -- Name: medicos_id_medico_seq; Type: SEQUENCE; Schema: public; Owner: postgres
 --
 
@@ -146,7 +146,7 @@ CREATE SEQUENCE public.medicos_id_medico_seq
 ALTER SEQUENCE public.medicos_id_medico_seq OWNER TO postgres;
 
 --
--- TOC entry 4959 (class 0 OID 0)
+-- TOC entry 4960 (class 0 OID 0)
 -- Dependencies: 223
 -- Name: medicos_id_medico_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
 --
@@ -155,7 +155,7 @@ ALTER SEQUENCE public.medicos_id_medico_seq OWNED BY public.medicos.id_medico;
 
 
 --
--- TOC entry 222 (class 1259 OID 57852)
+-- TOC entry 222 (class 1259 OID 65760)
 -- Name: pacientes; Type: TABLE; Schema: public; Owner: postgres
 --
 
@@ -165,10 +165,12 @@ CREATE TABLE public.pacientes (
     numero_documento character varying(20) NOT NULL,
     nombre character varying(100) NOT NULL,
     apellido character varying(100) NOT NULL,
+    rh character varying(5) NOT NULL,
     fecha_nacimiento date NOT NULL,
     telefono character varying(20),
     direccion character varying(200),
     email character varying(150),
+    CONSTRAINT ck_rh_paciente CHECK (((rh)::text = ANY ((ARRAY['O+'::character varying, 'O-'::character varying, 'A+'::character varying, 'A-'::character varying, 'B+'::character varying, 'B-'::character varying, 'AB+'::character varying, 'AB-'::character varying])::text[]))),
     CONSTRAINT ck_tipo_documento_paciente CHECK (((tipo_documento)::text = ANY ((ARRAY['CC'::character varying, 'TI'::character varying, 'RC'::character varying, 'CE'::character varying, 'PA'::character varying, 'PPT'::character varying])::text[])))
 );
 
@@ -176,7 +178,7 @@ CREATE TABLE public.pacientes (
 ALTER TABLE public.pacientes OWNER TO postgres;
 
 --
--- TOC entry 221 (class 1259 OID 57851)
+-- TOC entry 221 (class 1259 OID 65759)
 -- Name: pacientes_id_paciente_seq; Type: SEQUENCE; Schema: public; Owner: postgres
 --
 
@@ -192,7 +194,7 @@ CREATE SEQUENCE public.pacientes_id_paciente_seq
 ALTER SEQUENCE public.pacientes_id_paciente_seq OWNER TO postgres;
 
 --
--- TOC entry 4960 (class 0 OID 0)
+-- TOC entry 4961 (class 0 OID 0)
 -- Dependencies: 221
 -- Name: pacientes_id_paciente_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
 --
@@ -201,7 +203,7 @@ ALTER SEQUENCE public.pacientes_id_paciente_seq OWNED BY public.pacientes.id_pac
 
 
 --
--- TOC entry 220 (class 1259 OID 57838)
+-- TOC entry 220 (class 1259 OID 65746)
 -- Name: servicios_medicos; Type: TABLE; Schema: public; Owner: postgres
 --
 
@@ -219,7 +221,7 @@ CREATE TABLE public.servicios_medicos (
 ALTER TABLE public.servicios_medicos OWNER TO postgres;
 
 --
--- TOC entry 219 (class 1259 OID 57837)
+-- TOC entry 219 (class 1259 OID 65745)
 -- Name: servicios_medicos_id_servicio_seq; Type: SEQUENCE; Schema: public; Owner: postgres
 --
 
@@ -235,7 +237,7 @@ CREATE SEQUENCE public.servicios_medicos_id_servicio_seq
 ALTER SEQUENCE public.servicios_medicos_id_servicio_seq OWNER TO postgres;
 
 --
--- TOC entry 4961 (class 0 OID 0)
+-- TOC entry 4962 (class 0 OID 0)
 -- Dependencies: 219
 -- Name: servicios_medicos_id_servicio_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
 --
@@ -244,7 +246,7 @@ ALTER SEQUENCE public.servicios_medicos_id_servicio_seq OWNED BY public.servicio
 
 
 --
--- TOC entry 4766 (class 2604 OID 57883)
+-- TOC entry 4766 (class 2604 OID 65790)
 -- Name: citas id_cita; Type: DEFAULT; Schema: public; Owner: postgres
 --
 
@@ -252,7 +254,7 @@ ALTER TABLE ONLY public.citas ALTER COLUMN id_cita SET DEFAULT nextval('public.c
 
 
 --
--- TOC entry 4762 (class 2604 OID 57830)
+-- TOC entry 4762 (class 2604 OID 65738)
 -- Name: especialidades id_especialidad; Type: DEFAULT; Schema: public; Owner: postgres
 --
 
@@ -260,7 +262,7 @@ ALTER TABLE ONLY public.especialidades ALTER COLUMN id_especialidad SET DEFAULT 
 
 
 --
--- TOC entry 4765 (class 2604 OID 57867)
+-- TOC entry 4765 (class 2604 OID 65776)
 -- Name: medicos id_medico; Type: DEFAULT; Schema: public; Owner: postgres
 --
 
@@ -268,7 +270,7 @@ ALTER TABLE ONLY public.medicos ALTER COLUMN id_medico SET DEFAULT nextval('publ
 
 
 --
--- TOC entry 4764 (class 2604 OID 57855)
+-- TOC entry 4764 (class 2604 OID 65763)
 -- Name: pacientes id_paciente; Type: DEFAULT; Schema: public; Owner: postgres
 --
 
@@ -276,7 +278,7 @@ ALTER TABLE ONLY public.pacientes ALTER COLUMN id_paciente SET DEFAULT nextval('
 
 
 --
--- TOC entry 4763 (class 2604 OID 57841)
+-- TOC entry 4763 (class 2604 OID 65749)
 -- Name: servicios_medicos id_servicio; Type: DEFAULT; Schema: public; Owner: postgres
 --
 
@@ -284,7 +286,7 @@ ALTER TABLE ONLY public.servicios_medicos ALTER COLUMN id_servicio SET DEFAULT n
 
 
 --
--- TOC entry 4951 (class 0 OID 57880)
+-- TOC entry 4952 (class 0 OID 65787)
 -- Dependencies: 226
 -- Data for Name: citas; Type: TABLE DATA; Schema: public; Owner: postgres
 --
@@ -304,7 +306,7 @@ COPY public.citas (id_cita, fecha_hora, id_paciente, id_servicio, id_medico, est
 
 
 --
--- TOC entry 4943 (class 0 OID 57827)
+-- TOC entry 4944 (class 0 OID 65735)
 -- Dependencies: 218
 -- Data for Name: especialidades; Type: TABLE DATA; Schema: public; Owner: postgres
 --
@@ -324,47 +326,47 @@ COPY public.especialidades (id_especialidad, nombre_especialidad, descripcion) F
 
 
 --
--- TOC entry 4949 (class 0 OID 57864)
+-- TOC entry 4950 (class 0 OID 65773)
 -- Dependencies: 224
 -- Data for Name: medicos; Type: TABLE DATA; Schema: public; Owner: postgres
 --
 
 COPY public.medicos (id_medico, tipo_documento, numero_documento, nombre, apellido, registro_medico, consultorio, telefono_contacto, email) FROM stdin;
-1	CC	80111222	Alberto	Mendoza	RM-90111	Consultorio 101	3201112233	alberto.mendoza@email.com
-2	CC	80222333	Elena	Ríos	RM-90222	Consultorio 102	3202223344	elena.rios@email.com
-3	CC	80333444	Jorge	Cárdenas	RM-90333	Consultorio 103	3203334455	jorge.cardenas@email.com
-4	CC	80444555	Marcela	Gómez	RM-90444	Consultorio 104	3204445566	marcela.gomez@email.com
-5	CC	80555666	Ricardo	Silva	RM-90555	Consultorio 201	3205556677	ricardo.silva@email.com
-6	CC	80666777	Claudia	Patiño	RM-90666	Consultorio 202	3206667788	claudia.patino@email.com
-7	CC	80777888	Fernando	Torres	RM-90777	Consultorio 203	3207778899	fernando.torres@email.com
-8	CC	80888999	Lucía	Morales	RM-90888	Consultorio 204	3208889900	lucia.morales@email.com
-9	CC	80999000	Gabriel	Rojas	RM-90999	Consultorio 301	3209990011	gabriel.rojas@email.com
-10	CC	80000111	Andrea	Jiménez	RM-90000	Consultorio 302	3200001122	andrea.jimenez@email.com
+1	CC	80111222	Alberto	Mendoza	RM-90111	101	3201112233	alberto.mendoza@email.com
+2	CC	80222333	Elena	Ríos	RM-90222	102	3202223344	elena.rios@email.com
+3	CC	80333444	Jorge	Cárdenas	RM-90333	103	3203334455	jorge.cardenas@email.com
+4	CC	80444555	Marcela	Gómez	RM-90444	104	3204445566	marcela.gomez@email.com
+5	CC	80555666	Ricardo	Silva	RM-90555	201	3205556677	ricardo.silva@email.com
+6	CC	80666777	Claudia	Patiño	RM-90666	202	3206667788	claudia.patino@email.com
+7	CC	80777888	Fernando	Torres	RM-90777	203	3207778899	fernando.torres@email.com
+8	CC	80888999	Lucía	Morales	RM-90888	204	3208889900	lucia.morales@email.com
+9	CC	80999000	Gabriel	Rojas	RM-90999	301	3209990011	gabriel.rojas@email.com
+10	CC	80000111	Andrea	Jiménez	RM-90000	302	3200001122	andrea.jimenez@email.com
 \.
 
 
 --
--- TOC entry 4947 (class 0 OID 57852)
+-- TOC entry 4948 (class 0 OID 65760)
 -- Dependencies: 222
 -- Data for Name: pacientes; Type: TABLE DATA; Schema: public; Owner: postgres
 --
 
-COPY public.pacientes (id_paciente, tipo_documento, numero_documento, nombre, apellido, fecha_nacimiento, telefono, direccion, email) FROM stdin;
-1	CC	1001234567	Carlos	Pérez	1995-03-12	3101234567	Calle 10 # 15-20	carlos.perez@email.com
-2	CC	1002345678	María	Rodríguez	1990-07-22	3112345678	Carrera 5 # 20-30	maria.rodriguez@email.com
-3	TI	1003456789	Juan	Gómez	2010-05-15	3123456789	Avenida Circunvalar # 8-12	juan.gomez@email.com
-4	CC	1004567890	Ana	Torres	1988-11-04	3134567890	Calle 25 # 3-45	ana.torres@email.com
-5	CC	1005678901	Luis	Martínez	1992-01-30	3145678901	Carrera 12 # 45-60	luis.martinez@email.com
-6	CC	1006789012	Diana	Sánchez	1998-09-18	3156789012	Calle 8 # 11-22	diana.sanchez@email.com
-7	CC	1007890123	Pedro	Ramírez	1985-12-05	3167890123	Carrera 20 # 30-40	pedro.ramirez@email.com
-8	RC	1008901234	Sofía	Herrera	2024-02-10	3178901234	Calle 2 # 5-18	\N
-9	CC	1009012345	Andrés	Castro	1993-06-25	3189012345	Carrera 7 # 14-88	andres.castro@email.com
-10	TI	1010123456	Valentina	Vargas	2012-08-30	3190123456	Calle 30 # 22-10	valentina.vargas@email.com
+COPY public.pacientes (id_paciente, tipo_documento, numero_documento, nombre, apellido, rh, fecha_nacimiento, telefono, direccion, email) FROM stdin;
+1	CC	1001234567	Carlos	Pérez	O+	1995-03-12	3101234567	Calle 10 # 15-20	carlos.perez@email.com
+2	CC	1002345678	María	Rodríguez	A+	1990-07-22	3112345678	Carrera 5 # 20-30	maria.rodriguez@email.com
+3	TI	1003456789	Juan	Gómez	B+	2010-05-15	3123456789	Avenida Circunvalar # 8-12	juan.gomez@email.com
+4	CC	1004567890	Ana	Torres	AB+	1988-11-04	3134567890	Calle 25 # 3-45	ana.torres@email.com
+5	CC	1005678901	Luis	Martínez	O-	1992-01-30	3145678901	Carrera 12 # 45-60	luis.martinez@email.com
+6	CC	1006789012	Diana	Sánchez	A-	1998-09-18	3156789012	Calle 8 # 11-22	diana.sanchez@email.com
+7	CC	1007890123	Pedro	Ramírez	B-	1985-12-05	3167890123	Carrera 20 # 30-40	pedro.ramirez@email.com
+8	RC	1008901234	Sofía	Herrera	O+	2024-02-10	3178901234	Calle 2 # 5-18	\N
+9	CC	1009012345	Andrés	Castro	AB-	1993-06-25	3189012345	Carrera 7 # 14-88	andres.castro@email.com
+10	TI	1010123456	Valentina	Vargas	O+	2012-08-30	3190123456	Calle 30 # 22-10	valentina.vargas@email.com
 \.
 
 
 --
--- TOC entry 4945 (class 0 OID 57838)
+-- TOC entry 4946 (class 0 OID 65746)
 -- Dependencies: 220
 -- Data for Name: servicios_medicos; Type: TABLE DATA; Schema: public; Owner: postgres
 --
@@ -384,7 +386,7 @@ COPY public.servicios_medicos (id_servicio, nombre_servicio, id_especialidad, pr
 
 
 --
--- TOC entry 4962 (class 0 OID 0)
+-- TOC entry 4963 (class 0 OID 0)
 -- Dependencies: 225
 -- Name: citas_id_cita_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --
@@ -393,7 +395,7 @@ SELECT pg_catalog.setval('public.citas_id_cita_seq', 10, true);
 
 
 --
--- TOC entry 4963 (class 0 OID 0)
+-- TOC entry 4964 (class 0 OID 0)
 -- Dependencies: 217
 -- Name: especialidades_id_especialidad_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --
@@ -402,7 +404,7 @@ SELECT pg_catalog.setval('public.especialidades_id_especialidad_seq', 10, true);
 
 
 --
--- TOC entry 4964 (class 0 OID 0)
+-- TOC entry 4965 (class 0 OID 0)
 -- Dependencies: 223
 -- Name: medicos_id_medico_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --
@@ -411,7 +413,7 @@ SELECT pg_catalog.setval('public.medicos_id_medico_seq', 10, true);
 
 
 --
--- TOC entry 4965 (class 0 OID 0)
+-- TOC entry 4966 (class 0 OID 0)
 -- Dependencies: 221
 -- Name: pacientes_id_paciente_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --
@@ -420,7 +422,7 @@ SELECT pg_catalog.setval('public.pacientes_id_paciente_seq', 10, true);
 
 
 --
--- TOC entry 4966 (class 0 OID 0)
+-- TOC entry 4967 (class 0 OID 0)
 -- Dependencies: 219
 -- Name: servicios_medicos_id_servicio_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --
@@ -429,7 +431,7 @@ SELECT pg_catalog.setval('public.servicios_medicos_id_servicio_seq', 10, true);
 
 
 --
--- TOC entry 4792 (class 2606 OID 57889)
+-- TOC entry 4793 (class 2606 OID 65796)
 -- Name: citas citas_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -438,7 +440,7 @@ ALTER TABLE ONLY public.citas
 
 
 --
--- TOC entry 4774 (class 2606 OID 57836)
+-- TOC entry 4775 (class 2606 OID 65744)
 -- Name: especialidades especialidades_nombre_especialidad_key; Type: CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -447,7 +449,7 @@ ALTER TABLE ONLY public.especialidades
 
 
 --
--- TOC entry 4776 (class 2606 OID 57834)
+-- TOC entry 4777 (class 2606 OID 65742)
 -- Name: especialidades especialidades_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -456,7 +458,7 @@ ALTER TABLE ONLY public.especialidades
 
 
 --
--- TOC entry 4784 (class 2606 OID 57878)
+-- TOC entry 4785 (class 2606 OID 65785)
 -- Name: medicos medicos_email_key; Type: CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -465,7 +467,7 @@ ALTER TABLE ONLY public.medicos
 
 
 --
--- TOC entry 4786 (class 2606 OID 57874)
+-- TOC entry 4787 (class 2606 OID 65781)
 -- Name: medicos medicos_numero_documento_key; Type: CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -474,7 +476,7 @@ ALTER TABLE ONLY public.medicos
 
 
 --
--- TOC entry 4788 (class 2606 OID 57872)
+-- TOC entry 4789 (class 2606 OID 65779)
 -- Name: medicos medicos_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -483,7 +485,7 @@ ALTER TABLE ONLY public.medicos
 
 
 --
--- TOC entry 4790 (class 2606 OID 57876)
+-- TOC entry 4791 (class 2606 OID 65783)
 -- Name: medicos medicos_registro_medico_key; Type: CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -492,7 +494,7 @@ ALTER TABLE ONLY public.medicos
 
 
 --
--- TOC entry 4780 (class 2606 OID 57862)
+-- TOC entry 4781 (class 2606 OID 65771)
 -- Name: pacientes pacientes_numero_documento_key; Type: CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -501,7 +503,7 @@ ALTER TABLE ONLY public.pacientes
 
 
 --
--- TOC entry 4782 (class 2606 OID 57860)
+-- TOC entry 4783 (class 2606 OID 65769)
 -- Name: pacientes pacientes_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -510,7 +512,7 @@ ALTER TABLE ONLY public.pacientes
 
 
 --
--- TOC entry 4778 (class 2606 OID 57845)
+-- TOC entry 4779 (class 2606 OID 65753)
 -- Name: servicios_medicos servicios_medicos_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -519,7 +521,7 @@ ALTER TABLE ONLY public.servicios_medicos
 
 
 --
--- TOC entry 4794 (class 2606 OID 57900)
+-- TOC entry 4795 (class 2606 OID 65807)
 -- Name: citas fk_cita_medico; Type: FK CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -528,7 +530,7 @@ ALTER TABLE ONLY public.citas
 
 
 --
--- TOC entry 4795 (class 2606 OID 57890)
+-- TOC entry 4796 (class 2606 OID 65797)
 -- Name: citas fk_cita_paciente; Type: FK CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -537,7 +539,7 @@ ALTER TABLE ONLY public.citas
 
 
 --
--- TOC entry 4796 (class 2606 OID 57895)
+-- TOC entry 4797 (class 2606 OID 65802)
 -- Name: citas fk_cita_servicio; Type: FK CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -546,7 +548,7 @@ ALTER TABLE ONLY public.citas
 
 
 --
--- TOC entry 4793 (class 2606 OID 57846)
+-- TOC entry 4794 (class 2606 OID 65754)
 -- Name: servicios_medicos fk_especialidad; Type: FK CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -554,11 +556,11 @@ ALTER TABLE ONLY public.servicios_medicos
     ADD CONSTRAINT fk_especialidad FOREIGN KEY (id_especialidad) REFERENCES public.especialidades(id_especialidad) ON DELETE RESTRICT;
 
 
--- Completed on 2026-11-01 21:13:30
+-- Completed on 2026-11-08 10:26:18
 
 --
 -- PostgreSQL database dump complete
 --
 
-\unrestrict dve9dkZvtOBCLLY60Z7Ps3Uf7SuElY2znZJBBNyDdkZ90tO6JB5GakJShtk2IDv
+\unrestrict BJMf0fAKlOuCHc22kBBa2StP1fYN09doY2qHIVTjxOWQWDthMuiIu7B3cDAZnVz
 
