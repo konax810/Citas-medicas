@@ -131,7 +131,7 @@ INSERT INTO pacientes (tipo_documento, numero_documento, nombre, apellido, sexo,
 ('CC', '1005678901', 'Luis', 'Martínez', 'Masculino', 'O-', '1992-01-30', '3145678901', 'Carrera 12 # 45-60', 'luis.martinez@email.com'),
 ('CC', '1006789012', 'Diana', 'Sánchez', 'Femenino', 'A-', '1998-09-18', '3156789012', 'Calle 8 # 11-22', 'diana.sanchez@email.com'),
 ('CC', '1007890123', 'Pedro', 'Ramírez', 'Masculino', 'B-', '1985-12-05', '3167890123', 'Carrera 20 # 30-40', 'pedro.ramirez@email.com'),
-('RC', '1008901234', 'Sofía', 'Herrera', 'Femenino', 'O+', '2024-02-10', '3178901234', 'Calle 2 # 5-18', NULL),
+('TI', '1008901234', 'Sofía', 'Herrera', 'Femenino', 'O+', '2024-02-10', '3178901234', 'Calle 2 # 5-18', NULL),
 ('CC', '1009012345', 'Andrés', 'Castro', 'Masculino', 'AB-', '1993-06-25', '3189012345', 'Carrera 7 # 14-88', 'andres.castro@email.com'),
 ('TI', '1010123456', 'Valentina', 'Vargas', 'Femenino', 'O+', '2012-08-30', '3190123456', 'Calle 30 # 22-10', 'valentina.vargas@email.com');
 
