@@ -49,7 +49,7 @@
           {% for med in medicos %}
             <option value="{{ med.id_medico }}"
               {{ 'selected' if item.id_medico|string == med.id_medico|string }}>
-              Dr. {{ med.nombre }} {{ med.apellido }} ({{ med.consultorio }})</option>
+              Dr. {{ med.nombre }} {{ med.apellido }} (Cons. {{ med.consultorio }})</option>
           {% endfor %}
         </select>
       </div>
