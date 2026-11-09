@@ -16,13 +16,24 @@ def _leer_formulario(form):
         "numero_documento": v.texto(form, "numero_documento", "Número de documento", errores, max_len=20),
         "nombre": v.texto(form, "nombre", "Nombre", errores, max_len=100),
         "apellido": v.texto(form, "apellido", "Apellido", errores, max_len=100),
+        "sexo": v.texto(form, "sexo", "Sexo", errores, max_len=10),
+        "rh": v.texto(form, "rh", "RH", errores, max_len=5),
         "fecha_nacimiento": v.fecha(form, "fecha_nacimiento", "Fecha de nacimiento", errores),
         "telefono": v.texto(form, "telefono", "Teléfono", errores, obligatorio=False, max_len=20),
         "direccion": v.texto(form, "direccion", "Dirección", errores, obligatorio=False, max_len=200),
         "email": v.email(form, "email", "Email", errores),
     }
+
+    # Validaciones para asegurar que coincidan con las restricciones CHECK de PostgreSQL
     if datos["tipo_documento"] and datos["tipo_documento"] not in TIPOS_DOCUMENTO:
         errores.append("Tipo de documento no válido.")
+
+    if datos["sexo"] and datos["sexo"] not in ['Masculino', 'Femenino']:
+        errores.append("Sexo no válido.")
+
+    if datos["rh"] and datos["rh"] not in ['O+', 'O-', 'A+', 'A-', 'B+', 'B-', 'AB+', 'AB-']:
+        errores.append("RH no válido.")
+    
     return datos, errores
 
 
@@ -33,9 +44,9 @@ def _render_form(item, titulo):
 @bp.route("/")
 def listar():
     items = query("""
-        SELECT p.*, COUNT(c.id_cita) AS num_citas
+        SELECT p.*, COUNT(id_cita) AS num_citas
           FROM pacientes p
-          LEFT JOIN citas c ON c.id_paciente = p.id_paciente
+          LEFT JOIN citas c USING (id_paciente)
          GROUP BY p.id_paciente
          ORDER BY p.id_paciente
     """)
@@ -50,8 +61,9 @@ def crear():
         datos, errores = _leer_formulario(request.form)
         if not errores:
             try:
-                execute("""INSERT INTO pacientes (tipo_documento, numero_documento, nombre, apellido, fecha_nacimiento, telefono, direccion, email)
-                            VALUES (%(tipo_documento)s, %(numero_documento)s, %(nombre)s, %(apellido)s, %(fecha_nacimiento)s, %(telefono)s, %(direccion)s, %(email)s)""",
+                # 🛠️ EDITADO AQUÍ: Se agregaron sexo y rh al INSERT
+                execute("""INSERT INTO pacientes (tipo_documento, numero_documento, nombre, apellido, sexo, rh, fecha_nacimiento, telefono, direccion, email)
+                            VALUES (%(tipo_documento)s, %(numero_documento)s, %(nombre)s, %(apellido)s, %(sexo)s, %(rh)s, %(fecha_nacimiento)s, %(telefono)s, %(direccion)s, %(email)s)""",
                         datos)
                 flash("Paciente creado correctamente.", "success")
                 return redirect(url_for(".listar"))
@@ -72,15 +84,18 @@ def editar(id):
         datos, errores = _leer_formulario(request.form)
         if not errores:
             try:
+                # 🛠️ EDITADO AQUÍ: Se agregaron sexo y rh al UPDATE
                 execute("""UPDATE pacientes
-                              SET tipo_documento   = %(tipo_documento)s,
-                                  numero_documento = %(numero_documento)s,
-                                  nombre           = %(nombre)s,
-                                  apellido         = %(apellido)s,
-                                  fecha_nacimiento = %(fecha_nacimiento)s,
-                                  telefono         = %(telefono)s,
-                                  direccion        = %(direccion)s,
-                                  email            = %(email)s
+                            SET tipo_documento   = %(tipo_documento)s,
+                                numero_documento = %(numero_documento)s,
+                                nombre           = %(nombre)s,
+                                apellido         = %(apellido)s,
+                                sexo             = %(sexo)s,
+                                rh               = %(rh)s,
+                                fecha_nacimiento = %(fecha_nacimiento)s,
+                                telefono         = %(telefono)s,
+                                direccion        = %(direccion)s,
+                                email            = %(email)s
                             WHERE id_paciente = %(id)s""",
                         {**datos, "id": id})
                 flash("Paciente actualizado correctamente.", "success")
