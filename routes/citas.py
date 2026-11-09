@@ -27,9 +27,11 @@ def _leer_formulario(form):
 def _render_form(item, titulo):
     return render_template(
         "citas/form.html", item=item, titulo=titulo, estados=ESTADOS_CITA,
-        pacientes=query("SELECT id_paciente, nombre, apellido FROM pacientes ORDER BY apellido"),
+        # 🛠️ AGREGADO: numero_documento para que aparezca en el paréntesis del paciente
+        pacientes=query("SELECT id_paciente, nombre, apellido, numero_documento FROM pacientes ORDER BY apellido"),
         servicios=query("SELECT id_servicio, nombre_servicio, precio_consulta FROM servicios_medicos ORDER BY nombre_servicio"),
-        medicos=query("SELECT id_medico, nombre, apellido FROM medicos ORDER BY apellido"),
+        # 🛠️ Asegúrate de incluir el campo que va dentro del paréntesis del médico (ej: consultorio)
+        medicos=query("SELECT id_medico, nombre, apellido, consultorio FROM medicos ORDER BY apellido"),
     )
 
 
