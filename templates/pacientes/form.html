@@ -35,6 +35,26 @@
         <input type="date" class="form-control" id="fecha_nacimiento" name="fecha_nacimiento" required
                value="{{ item.fecha_nacimiento or '' }}">
       </div>
+      <!-- Campo Sexo -->
+      <div class="col-md-6">
+        <label for="sexo" class="form-label">Sexo *</label>
+        <select class="form-select" id="sexo" name="sexo" required>
+          <option value="">Seleccione...</option>
+          <option value="Masculino" {{ 'selected' if item.sexo == 'Masculino' }}>Masculino</option>
+          <option value="Femenino" {{ 'selected' if item.sexo == 'Femenino' }}>Femenino</option>
+        </select>
+      </div>
+
+      <!-- Campo RH -->
+      <div class="col-md-6">
+        <label for="rh" class="form-label">RH *</label>
+        <select class="form-select" id="rh" name="rh" required>
+          <option value="">Seleccione...</option>
+          {% for tipo_rh in ['O+', 'O-', 'A+', 'A-', 'B+', 'B-', 'AB+', 'AB-'] %}
+            <option value="{{ tipo_rh }}" {{ 'selected' if item.rh == tipo_rh }}>{{ tipo_rh }}</option>
+          {% endfor %}
+        </select>
+      </div>
       <div class="col-md-4">
         <label for="telefono" class="form-label">Teléfono</label>
         <input type="text" class="form-control" id="telefono" name="telefono"
