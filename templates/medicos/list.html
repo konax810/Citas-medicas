@@ -14,6 +14,7 @@
           <th>Registro médico</th>
           <th>Consultorio</th>
           <th>Teléfono</th>
+          <th>Correo</th>
           <th class="num">Citas</th>
           <th></th>
         </tr>
@@ -27,6 +28,7 @@
           <td><code>{{ m_item.registro_medico }}</code></td>
           <td>{{ m_item.consultorio }}</td>
           <td>{{ m_item.telefono_contacto }}</td>
+          <td>{{ m_item.email or 'N/A' }}</td> <!-- 👈 2. Pintas el email del médico aquí -->
           <td class="num">{{ m_item.num_citas }}</td>
           <td>{{ m.acciones(url_for('medicos.editar', id=m_item.id_medico),
                             url_for('medicos.eliminar', id=m_item.id_medico),
