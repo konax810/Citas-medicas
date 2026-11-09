@@ -2,10 +2,12 @@
 {% import "_macros.html" as m %}
 {% block title %}{{ titulo }}{% endblock %}
 {% block content %}
-<h1 class="h3 mb-3">{{ titulo }}</h1>
-<div class="card shadow-sm"><div class="card-body">
+<div class="form-page-heading"><h1>{{ titulo }}</h1></div>
+<div class="card form-card"><div class="card-body">
   <form method="post" novalidate>
-    <div class="row g-3">
+    <fieldset class="form-section">
+      <legend>Información del servicio</legend>
+      <div class="row g-3">
       <div class="col-md-8">
         <label for="nombre_servicio" class="form-label">Nombre del servicio *</label>
         <input type="text" class="form-control" id="nombre_servicio" name="nombre_servicio"
@@ -22,6 +24,11 @@
           {% endfor %}
         </select>
       </div>
+      </div>
+    </fieldset>
+    <fieldset class="form-section">
+      <legend>Precio y duración</legend>
+      <div class="row g-3">
       <div class="col-md-6">
         <label for="precio_consulta" class="form-label">Precio de consulta (COP) *</label>
         <input type="number" class="form-control" id="precio_consulta" name="precio_consulta"
@@ -33,7 +40,8 @@
         <input type="number" class="form-control" id="duracion_minutos" name="duracion_minutos" min="1" step="1" required
                value="{{ item.duracion_minutos if item.duracion_minutos is not none }}">
       </div>
-    </div>
+      </div>
+    </fieldset>
     {{ m.botones_form(url_for('servicios_medicos.listar')) }}
   </form>
 </div></div>

@@ -68,19 +68,18 @@ cd Citas-medicas
 
 ### 6.2. Crear el entorno virtual
 
-```bash
-python -m venv .venv
-```
-
-Activar el entorno virtual en Windows:
+En Windows
 
 ```bash
-.venv\Scripts\activate
+py -m venv .venv
+Set-ExecutionPolicy -Scope Process -ExecutionPolicy RemoteSigned
+.venv\Scripts\activate       
 ```
 
 En Linux o macOS:
 
 ```bash
+python3 -m venv .venv
 source .venv/bin/activate
 ```
 
@@ -101,7 +100,7 @@ Configurar las credenciales de conexión a PostgreSQL:
 ```ini
 DB_HOST=localhost
 DB_PORT=5432
-DB_NAME=citas_medicas_db
+DB_NAME=consultorio_medico_db
 DB_USER=tu_usuario_postgres
 DB_PASSWORD=tu_contraseña
 ```
@@ -111,19 +110,24 @@ Reemplazar los valores de ejemplo por las credenciales correspondientes a la ins
 ### 6.5. Configurar la base de datos
 
 1. Abrir PostgreSQL mediante pgAdmin 4.
-2. Crear una base de datos con el nombre `citas_medicas_db`.
+2. Crear una base de datos con el nombre `consultorio_medico_db`.
 3. Seleccionar la base de datos creada.
-4. Importar o ejecutar el archivo `database/backup.sql`.
+4. Importar o ejecutar el archivo `database/consultorio_medico_db.sql`.
 5. Verificar que las cinco tablas se hayan creado correctamente y que contengan sus respectivos registros.
 
 ### 6.6. Ejecutar la aplicación
 
 Con el entorno virtual activado y la base de datos configurada, ejecutar:
 
+en Windows
 ```bash
-python app.py
+py app.py
 ```
 
+en Linux o Mac
+```bash
+python3 app.py
+```
 Abrir el navegador e ingresar a:
 
 ```text

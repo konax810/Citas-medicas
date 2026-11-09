@@ -1,8 +1,11 @@
 {% extends "base.html" %}
 {% block title %}Inicio{% endblock %}
 {% block content %}
-<h1 class="h3 mb-1">Panel de la base de datos <code>consultorio_medico_db</code></h1>
-<p class="text-secondary mb-4">Selecciona una tabla para consultar, crear, editar o eliminar registros.</p>
+<section class="dashboard-intro">
+  <p class="text-uppercase small fw-semibold text-secondary mb-2">Administración del consultorio</p>
+  <h1 class="h2 mb-2">Panel de gestión</h1>
+  <p class="text-secondary mb-0">Consulta y administra la información de tu consultorio desde un solo lugar.</p>
+</section>
 
 {% set tarjetas = [
   ('especialidades.listar', 'Especialidades', 'journal-medical', c.especialidades, ''),
@@ -13,13 +16,13 @@
 ] %}
 <div class="row g-3">
   {% for endpoint, label, icon, n, extra in tarjetas %}
-  <div class="col-6 col-md-4 col-lg">
+  <div class="col-6 col-md-4 col-xl">
     <a class="card-link-full" href="{{ url_for(endpoint) }}">
       <div class="card card-tabla {{ extra }} h-100">
         <div class="card-body">
-          <div class="text-secondary"><i class="bi bi-{{ icon }}"></i> {{ label }}</div>
+          <div class="card-label"><span class="card-icon"><i class="bi bi-{{ icon }}" aria-hidden="true"></i></span> {{ label }}</div>
           <div class="numero">{{ n }}</div>
-          <div class="small text-secondary">registros</div>
+          <div class="card-caption">registros</div>
         </div>
       </div>
     </a>
@@ -27,10 +30,4 @@
   {% endfor %}
 </div>
 
-<div class="card mt-4">
-  <div class="card-body">
-    <div class="text-secondary">Total de citas programadas</div>
-    <div class="fs-3 fw-semibold">{{ c.citas }} registros activos</div>
-  </div>
-</div>
 {% endblock %}

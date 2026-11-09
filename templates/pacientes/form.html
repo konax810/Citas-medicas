@@ -2,10 +2,12 @@
 {% import "_macros.html" as m %}
 {% block title %}{{ titulo }}{% endblock %}
 {% block content %}
-<h1 class="h3 mb-3">{{ titulo }}</h1>
-<div class="card shadow-sm"><div class="card-body">
+<div class="form-page-heading"><h1>{{ titulo }}</h1></div>
+<div class="card form-card"><div class="card-body">
   <form method="post" novalidate>
-    <div class="row g-3">
+    <fieldset class="form-section">
+      <legend>Identificación</legend>
+      <div class="row g-3">
       <div class="col-md-4">
         <label for="tipo_documento" class="form-label">Tipo de documento *</label>
         <select class="form-select" id="tipo_documento" name="tipo_documento" required>
@@ -20,6 +22,11 @@
         <input type="text" class="form-control" id="numero_documento" name="numero_documento"
                maxlength="20" required value="{{ item.numero_documento or '' }}">
       </div>
+      </div>
+    </fieldset>
+    <fieldset class="form-section">
+      <legend>Datos personales</legend>
+      <div class="row g-3">
       <div class="col-md-6">
         <label for="nombre" class="form-label">Nombre *</label>
         <input type="text" class="form-control" id="nombre" name="nombre"
@@ -36,7 +43,7 @@
                value="{{ item.fecha_nacimiento or '' }}">
       </div>
       <!-- Campo Sexo -->
-      <div class="col-md-6">
+      <div class="col-md-4">
         <label for="sexo" class="form-label">Sexo *</label>
         <select class="form-select" id="sexo" name="sexo" required>
           <option value="">Seleccione...</option>
@@ -46,7 +53,7 @@
       </div>
 
       <!-- Campo RH -->
-      <div class="col-md-6">
+      <div class="col-md-4">
         <label for="rh" class="form-label">RH *</label>
         <select class="form-select" id="rh" name="rh" required>
           <option value="">Seleccione...</option>
@@ -55,6 +62,11 @@
           {% endfor %}
         </select>
       </div>
+      </div>
+    </fieldset>
+    <fieldset class="form-section">
+      <legend>Contacto</legend>
+      <div class="row g-3">
       <div class="col-md-4">
         <label for="telefono" class="form-label">Teléfono</label>
         <input type="text" class="form-control" id="telefono" name="telefono"
@@ -70,7 +82,8 @@
         <input type="text" class="form-control" id="direccion" name="direccion"
                maxlength="200" value="{{ item.direccion or '' }}">
       </div>
-    </div>
+      </div>
+    </fieldset>
     {{ m.botones_form(url_for('pacientes.listar')) }}
   </form>
 </div></div>

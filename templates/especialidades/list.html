@@ -3,8 +3,9 @@
 {% block title %}Especialidades{% endblock %}
 {% block content %}
 {{ m.encabezado('Especialidades', 'journal-medical', url_for('especialidades.crear'), items|length) }}
-<div class="card shadow-sm">
-  <div class="table-responsive">
+<div class="table-scroll-hint"><i class="bi bi-arrow-left-right" aria-hidden="true"></i> Desliza horizontalmente para consultar todas las columnas</div>
+<div class="card table-card">
+  <div class="table-responsive" role="region" aria-label="Tabla de especialidades; desplázate horizontalmente para ver todas las columnas" tabindex="0">
     <table class="table table-hover align-middle mb-0">
       <thead>
         <tr>
@@ -12,7 +13,7 @@
           <th>Nombre</th>
           <th>Descripción</th>
           <th class="num">Servicios</th>
-          <th></th>
+          <th class="table-action-cell"><span class="visually-hidden">Acciones</span></th>
         </tr>
       </thead>
       <tbody>
@@ -22,7 +23,7 @@
           <td class="fw-medium">{{ c.nombre_especialidad }}</td>
           <td class="text-secondary">{{ c.descripcion or '' }}</td>
           <td class="num">{{ c.num_servicios }}</td>
-          <td>{{ m.acciones(url_for('especialidades.editar', id=c.id_especialidad),
+          <td class="table-action-cell">{{ m.acciones(url_for('especialidades.editar', id=c.id_especialidad),
                             url_for('especialidades.eliminar', id=c.id_especialidad),
                             'la especialidad ' ~ c.nombre_especialidad) }}</td>
         </tr>

@@ -44,7 +44,7 @@ CREATE TABLE pacientes (
 	fecha_nacimiento DATE NOT NULL, -- Clave para calcular la edad exacta siempre
     telefono VARCHAR(20),
     direccion VARCHAR(200),
-    email VARCHAR(150) -- Opcional (NULL) y sin UNIQUE para familias o niños
+    email VARCHAR(150), -- Opcional (NULL) y sin UNIQUE para familias o niños
 
 	-- Restricción estricta de documentos válidos (incluyendo Registro Civil y Tarjeta de Identidad)
 	CONSTRAINT ck_tipo_documento_paciente 

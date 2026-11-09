@@ -3,8 +3,9 @@
 {% block title %}Pacientes{% endblock %}
 {% block content %}
 {{ m.encabezado('Pacientes', 'people', url_for('pacientes.crear'), items|length) }}
-<div class="card shadow-sm">
-  <div class="table-responsive">
+<div class="table-scroll-hint"><i class="bi bi-arrow-left-right" aria-hidden="true"></i> Desliza horizontalmente para consultar todas las columnas</div>
+<div class="card table-card">
+  <div class="table-responsive" role="region" aria-label="Tabla de pacientes; desplázate horizontalmente para ver todas las columnas" tabindex="0">
     <table class="table table-hover align-middle mb-0">
       <thead>
         <tr>
@@ -19,7 +20,7 @@
           <th>Dirección</th>
           <th>Email</th>
           <th class="num">Citas</th>
-          <th></th>
+          <th class="table-action-cell"><span class="visually-hidden">Acciones</span></th>
         </tr>
       </thead>
       <tbody>
@@ -36,12 +37,12 @@
           <td>{{ p.direccion or '-' }}</td>
           <td>{% if p.email %}<a href="mailto:{{ p.email }}">{{ p.email }}</a>{% else %}<span class="text-muted">-</span>{% endif %}</td>
           <td class="num">{{ p.num_citas }}</td>
-          <td>{{ m.acciones(url_for('pacientes.editar', id=p.id_paciente),
+          <td class="table-action-cell">{{ m.acciones(url_for('pacientes.editar', id=p.id_paciente),
                             url_for('pacientes.eliminar', id=p.id_paciente),
                             'al paciente ' ~ p.nombre ~ ' ' ~ p.apellido) }}</td>
         </tr>
         {% else %}
-          {{ m.sin_registros(7) }}
+          {{ m.sin_registros(12) }}
         {% endfor %}
       </tbody>
     </table>

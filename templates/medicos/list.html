@@ -3,8 +3,9 @@
 {% block title %}Médicos{% endblock %}
 {% block content %}
 {{ m.encabezado('Médicos', 'person-badge-fill', url_for('medicos.crear'), items|length) }}
-<div class="card shadow-sm">
-  <div class="table-responsive">
+<div class="table-scroll-hint"><i class="bi bi-arrow-left-right" aria-hidden="true"></i> Desliza horizontalmente para consultar todas las columnas</div>
+<div class="card table-card">
+  <div class="table-responsive" role="region" aria-label="Tabla de médicos; desplázate horizontalmente para ver todas las columnas" tabindex="0">
     <table class="table table-hover align-middle mb-0">
       <thead>
         <tr>
@@ -16,7 +17,7 @@
           <th>Teléfono</th>
           <th>Correo</th>
           <th class="num">Citas</th>
-          <th></th>
+          <th class="table-action-cell"><span class="visually-hidden">Acciones</span></th>
         </tr>
       </thead>
       <tbody>
@@ -30,12 +31,12 @@
           <td>{{ m_item.telefono_contacto }}</td>
           <td>{{ m_item.email or 'N/A' }}</td> <!-- 👈 2. Pintas el email del médico aquí -->
           <td class="num">{{ m_item.num_citas }}</td>
-          <td>{{ m.acciones(url_for('medicos.editar', id=m_item.id_medico),
+          <td class="table-action-cell">{{ m.acciones(url_for('medicos.editar', id=m_item.id_medico),
                             url_for('medicos.eliminar', id=m_item.id_medico),
                             'al médico ' ~ m_item.nombre ~ ' ' ~ m_item.apellido) }}</td>
         </tr>
         {% else %}
-          {{ m.sin_registros(8) }}
+          {{ m.sin_registros(9) }}
         {% endfor %}
       </tbody>
     </table>

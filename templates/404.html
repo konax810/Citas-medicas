@@ -1,9 +1,10 @@
 {% extends "base.html" %}
 {% block title %}No encontrado{% endblock %}
 {% block content %}
-<div class="text-center py-5">
-  <h1 class="display-5">404</h1>
-  <p class="text-secondary">El registro o la página que buscas no existe.</p>
-  <a href="{{ url_for('inicio') }}" class="btn btn-primary">Volver al inicio</a>
+<div class="card text-center py-5 px-3">
+  <div class="summary-icon mx-auto mb-3"><i class="bi bi-search" aria-hidden="true"></i></div>
+  <h1 class="display-5 fw-bold">No encontramos esa página</h1>
+  <p class="text-secondary">El registro o la página que buscas no existe o ya no está disponible.</p>
+  <div><a href="{{ url_for('inicio') }}" class="btn btn-primary"><i class="bi bi-house-door me-1" aria-hidden="true"></i> Volver al inicio</a></div>
 </div>
 {% endblock %}
