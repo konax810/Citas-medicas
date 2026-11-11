@@ -48,11 +48,11 @@ CREATE TABLE pacientes (
 
 	-- Restricción estricta de documentos válidos (incluyendo Registro Civil y Tarjeta de Identidad)
 	CONSTRAINT ck_tipo_documento_paciente 
-        CHECK (tipo_documento IN ('CC', 'TI', 'RC', 'CE', 'PA', 'PPT'))
+        CHECK (tipo_documento IN ('CC', 'TI', 'RC', 'CE', 'PA', 'PPT')),
 
 	-- Restricción para asegurar que el RH ingresado sea válido en el sistema médico
     CONSTRAINT ck_rh_paciente 
-        CHECK (rh IN ('O+', 'O-', 'A+', 'A-', 'B+', 'B-', 'AB+', 'AB-'))
+        CHECK (rh IN ('O+', 'O-', 'A+', 'A-', 'B+', 'B-', 'AB+', 'AB-')),
 
 	CONSTRAINT ck_sexo_paciente 
         CHECK (sexo IN ('Masculino', 'Femenino'))
