@@ -66,6 +66,8 @@
 | numero_documento | VARCHAR(20) | NOT NULL, UNIQUE | Número único de documento de identidad. |
 | nombre | VARCHAR(100) | NOT NULL | Nombre(s) del paciente. |
 | apellido | VARCHAR(100) | NOT NULL | Apellido(s) del paciente. |
+| sexo | VARCHAR(10) | NOT NULL, CHECK (IN ('Masculino', 'Femenino')) | Sexo del paciente. |
+| rh | VARCHAR(5) | NOT NULL, CHECK (IN ('O+', 'O-', 'A+', 'A-', 'B+', 'B-', 'AB+', 'AB-')) | Tipo de sangre (RH) del paciente. |
 | fecha_nacimiento | DATE | NOT NULL | Fecha de nacimiento utilizada para el cálculo exacto de edad. |
 | telefono | VARCHAR(20) | NULL | Número telefónico de contacto del paciente o acudiente. |
 | direccion | VARCHAR(200) | NULL | Dirección de residencia del paciente. |
