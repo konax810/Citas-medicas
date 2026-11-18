@@ -188,7 +188,7 @@ td.num, th.num { text-align: right; white-space: nowrap; }
 .form-section legend { float: none; width: 100%; margin-bottom: 1rem; padding: 0; color: var(--clinic-navy); font-size: 1rem; font-weight: 700; }
 .form-label { margin-bottom: .45rem; color: #3e4b61; font-size: .91rem; font-weight: 650; }
 .form-control, .form-select { min-height: 2.8rem; border-color: #d8e0eb; border-radius: .7rem; background-color: #fff; color: var(--clinic-ink); }
-textarea.form-control { min-height: auto; }
+textarea.form-control { min-height: 150px; resize: none; field-sizing: content; max-height: 300px;}
 .form-control:focus, .form-select:focus { border-color: #6d8bb3; box-shadow: 0 0 0 .22rem rgba(36, 54, 95, .1); }
 .form-actions { padding-top: 1.15rem; border-top: 1px solid var(--clinic-line); }
 .form-help { margin-top: .25rem; color: var(--clinic-muted); font-size: .82rem; }
