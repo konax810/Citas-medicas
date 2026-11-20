@@ -22,7 +22,7 @@ Los resultados de esta columna corresponden a aserciones reales de pytest; se in
 - **Datos de entrada:** Nombre único generado para pytest; duplicado del mismo nombre; después, espacios en blanco.
 - **Resultado esperado:** La aplicación rechaza el duplicado y comunica que el campo es obligatorio cuando está vacío.
 - **Resultado obtenido real:** `test_PF_02_especialidades_nombre_requerido_y_unico` verificó ambos mensajes y las páginas principales.
-- **Evidencia:**  ![](evidencias/pruebas_pytest.png).
+- **Evidencia:**  ![](evidencias/pf02.png).
 
 ### PF-03 — Eliminar especialidad usada
 - **Tabla:** `especialidades`
@@ -30,7 +30,7 @@ Los resultados de esta columna corresponden a aserciones reales de pytest; se in
 - **Datos de entrada:** Especialidad de prueba con servicio dependiente y cita asociada.
 - **Resultado esperado:** La clave foránea impide la eliminación, la especialidad permanece y se informa que tiene registros relacionados.
 - **Resultado obtenido real:** `test_PF_03_especialidad_referenciada_no_se_elimina` comprobó el mensaje y que la especialidad sigue en la base de pruebas.
-- **Evidencia:**  ![](evidencias/pruebas_pytest.png).
+- **Evidencia:**  ![](evidencias/pf03.png).
 
 ## Servicios médicos
 
@@ -66,7 +66,7 @@ Los resultados de esta columna corresponden a aserciones reales de pytest; se in
 - **Datos de entrada:** Documento y correo únicos generados para la ejecución, datos personales válidos; edición del apellido y correo vacío.
 - **Resultado esperado:** El paciente aparece en el listado, los cambios quedan persistidos y la fila se elimina correctamente.
 - **Resultado obtenido real:** `test_PF_07_pacientes_ciclo_crud_listado_y_rutas` verificó creación, listado, formulario de edición, 404 para ID inexistente, valores actualizados persistidos y eliminación.
-- **Evidencia:**  ![](evidencias/pruebas_pytest.png).
+- **Evidencia:**  ![](evidencias/pf07.png).
 
 ### PF-08 — Datos personales y correo inválidos
 - **Tabla:** `pacientes`
@@ -118,7 +118,7 @@ Los resultados de esta columna corresponden a aserciones reales de pytest; se in
 - **Datos de entrada:** Fecha `2099-01-01T10:00`, paciente/servicio/médico existentes, estado `Programada`; edición a `Atendida`.
 - **Resultado esperado:** La cita aparece en el listado, se persiste el estado actualizado y se elimina correctamente.
 - **Resultado obtenido real:** `test_PF_13_citas_ciclo_crud_listado_y_rutas` verificó creación, listado, formulario de edición, 404 para ID inexistente, estado actualizado persistido y eliminación.
-- **Evidencia:**  ![](evidencias/pruebas_pytest.png).
+- **Evidencia:**  ![](evidencias/pf13.png).
 
 ### PF-14 — Fecha, relaciones y estado inválidos
 - **Tabla:** `citas`
