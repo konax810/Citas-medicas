@@ -1,4 +1,4 @@
-# Sistema de Gestión de Consultorio Médico (Citas Médicas)
+# Sistema de Gestión de Consultorio Médico (Consultorio Médico)
 
 Aplicación web CRUD desarrollada con **Python, Flask, PostgreSQL, HTML5 y Bootstrap 5**, orientada a la administración de un consultorio médico. El sistema permite gestionar especialidades, servicios médicos, pacientes, médicos y citas médicas, facilitando la organización y el control de la información.
 
@@ -71,15 +71,23 @@ cd Citas-medicas
 En Windows
 
 ```bash
+-- crea el entorno virtual .venv
 py -m venv .venv
+
+--  comando de permiso temporal
 Set-ExecutionPolicy -Scope Process -ExecutionPolicy RemoteSigned
+
+-- comando de activación tu entorno virtual
 .venv\Scripts\activate       
 ```
 
 En Linux o macOS:
 
 ```bash
+-- crea el entorno virtual .venv
 python3 -m venv .venv
+
+-- comando de activación tu entorno virtual
 source .venv/bin/activate
 ```
 
