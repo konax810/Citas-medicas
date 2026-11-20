@@ -11,7 +11,7 @@
         <div class="col-md-6">
           <label for="fecha_hora" class="form-label">Fecha y hora de la cita *</label>
           <input type="datetime-local" class="form-control" id="fecha_hora" name="fecha_hora" required
-                 value="{{ item.fecha_hora.strftime('%Y-%m-%dT%H:%M') if item.fecha_hora else '' }}">
+                 value="{{ item.fecha_hora if item.fecha_hora is string else (item.fecha_hora.strftime('%Y-%m-%dT%H:%M') if item.fecha_hora else '') }}">
         </div>
         <div class="col-md-6">
           <label for="estado_cita" class="form-label">Estado de la cita *</label>

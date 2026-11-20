@@ -60,7 +60,7 @@ def execute(sql, params=()):
 def error_message(exc):
     """Traduce los errores más comunes de PostgreSQL a mensajes claros en español."""
     code = getattr(exc, "pgcode", None)
-    if code == "23503":  # foreign_key_violation
+    if code in ("23503", "23001"):  # foreign_key_violation / restrict_violation
         return ("No se puede completar la operación: el registro está relacionado "
                 "con otros datos (por ejemplo, tiene citas o servicios asociados).")
     if code == "23505":  # unique_violation
