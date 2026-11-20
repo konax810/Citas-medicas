@@ -37,6 +37,13 @@ def _render_form(item, titulo):
 
 @bp.route("/")
 def listar():
+    execute("""
+        UPDATE citas
+           SET estado_cita = 'Cancelada'
+         WHERE estado_cita = 'Programada'
+           AND fecha_hora::date < CURRENT_DATE
+    """)
+
     items = query("""
         SELECT ci.*, p.nombre AS nombre_paciente, p.apellido AS apellido_paciente,
                s.nombre_servicio, m.nombre AS nombre_medico, m.apellido AS apellido_medico
