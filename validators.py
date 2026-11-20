@@ -51,11 +51,17 @@ def fecha(form, campo, etiqueta, errores):
     if not valor:
         errores.append(f"El campo «{etiqueta}» es obligatorio.")
         return None
+    
     try:
-        return date.fromisoformat(valor)
+        fecha_ingresada = date.fromisoformat(valor)
     except ValueError:
         errores.append(f"«{etiqueta}» debe ser una fecha válida.")
         return None
+
+    if fecha_ingresada > date.today():
+        errores.append(f"«{etiqueta}» no puede ser una fecha futura.")
+
+    return fecha_ingresada
 
 
 def fecha_hora(form, campo, etiqueta, errores):

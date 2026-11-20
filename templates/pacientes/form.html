@@ -40,7 +40,7 @@
       <div class="col-md-4">
         <label for="fecha_nacimiento" class="form-label">Fecha de nacimiento *</label>
         <input type="date" class="form-control" id="fecha_nacimiento" name="fecha_nacimiento" required
-               value="{{ item.fecha_nacimiento or '' }}">
+               max="{{ hoy }}" value="{{ item.fecha_nacimiento or '' }}">
       </div>
       <!-- Campo Sexo -->
       <div class="col-md-4">

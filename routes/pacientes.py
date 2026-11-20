@@ -4,6 +4,8 @@ from flask import Blueprint, abort, flash, redirect, render_template, request, u
 import validators as v
 from db import DatabaseError, error_message, execute, query
 
+from datetime import date
+
 bp = Blueprint("pacientes", __name__, url_prefix="/pacientes")
 
 TIPOS_DOCUMENTO = ["CC", "TI", "RC", "CE", "PA", "PPT"]
@@ -38,8 +40,13 @@ def _leer_formulario(form):
 
 
 def _render_form(item, titulo):
-    return render_template("pacientes/form.html", item=item, titulo=titulo, tipos_documento=TIPOS_DOCUMENTO)
-
+    return render_template(
+        "pacientes/form.html",
+        item=item,
+        titulo=titulo,
+        tipos_documento=TIPOS_DOCUMENTO,
+        hoy=date.today().isoformat(),
+    )
 
 @bp.route("/")
 def listar():
