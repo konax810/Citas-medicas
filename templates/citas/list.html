@@ -6,7 +6,7 @@
 <div class="table-scroll-hint"><i class="bi bi-arrow-left-right" aria-hidden="true"></i> Desliza horizontalmente para consultar todas las columnas</div>
 <div class="card table-card">
   <div class="table-responsive" role="region" aria-label="Tabla de citas médicas; desplázate horizontalmente para ver todas las columnas" tabindex="0">
-    <table class="table table-hover align-middle mb-0">
+    <table class="table table-hover align-middle mb-0" id="records-table">
       <thead>
         <tr>
           <th>ID</th>
@@ -21,7 +21,7 @@
       </thead>
       <tbody>
         {% for c in items %}
-        <tr>
+        <tr data-table-row>
           <td>{{ c.id_cita }}</td>
           <td class="text-nowrap">{{ c.fecha_hora.strftime('%d/%m/%Y %H:%M') if c.fecha_hora else '' }}</td>
           <td class="fw-medium">{{ c.nombre_paciente }} {{ c.apellido_paciente }}</td>

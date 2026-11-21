@@ -6,7 +6,7 @@
 <div class="table-scroll-hint"><i class="bi bi-arrow-left-right" aria-hidden="true"></i> Desliza horizontalmente para consultar todas las columnas</div>
 <div class="card table-card">
   <div class="table-responsive" role="region" aria-label="Tabla de médicos; desplázate horizontalmente para ver todas las columnas" tabindex="0">
-    <table class="table table-hover align-middle mb-0">
+    <table class="table table-hover align-middle mb-0" id="records-table">
       <thead>
         <tr>
           <th>ID</th>
@@ -22,7 +22,7 @@
       </thead>
       <tbody>
         {% for m_item in items %}
-        <tr>
+        <tr data-table-row>
           <td>{{ m_item.id_medico }}</td>
           <td><span class="badge text-bg-light border">{{ m_item.tipo_documento }}</span> {{ m_item.numero_documento }}</td>
           <td class="fw-medium">Dr. {{ m_item.nombre }} {{ m_item.apellido }}</td>

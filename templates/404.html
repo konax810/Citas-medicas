@@ -1,10 +1,11 @@
 {% extends "base.html" %}
 {% block title %}No encontrado{% endblock %}
 {% block content %}
-<div class="card text-center py-5 px-3">
+<div class="card error-state text-center py-5 px-3">
   <div class="summary-icon mx-auto mb-3"><i class="bi bi-search" aria-hidden="true"></i></div>
+  <p class="section-eyebrow">Error 404</p>
   <h1 class="display-5 fw-bold">No encontramos esa página</h1>
-  <p class="text-secondary">El registro o la página que buscas no existe o ya no está disponible.</p>
+  <p class="text-secondary mx-auto">El registro o la página que buscas no existe o ya no está disponible. Puedes volver al panel para continuar.</p>
   <div><a href="{{ url_for('inicio') }}" class="btn btn-primary"><i class="bi bi-house-door me-1" aria-hidden="true"></i> Volver al inicio</a></div>
 </div>
 {% endblock %}

@@ -1,10 +1,44 @@
 {# Encabezado de cada listado con botón "Nuevo" y contador #}
 {% macro encabezado(titulo, icono, url_nuevo, total) %}
-<div class="list-heading d-flex flex-wrap justify-content-between align-items-center gap-2">
-  <h1 class="h3 mb-0"><span class="page-title-icon"><i class="bi bi-{{ icono }}" aria-hidden="true"></i></span> {{ titulo }}
-    <span class="badge fs-6 align-middle" aria-label="{{ total }} registros">{{ total }}</span></h1>
-  <a href="{{ url_nuevo }}" class="btn btn-primary"><i class="bi bi-plus-lg"></i> Nuevo</a>
+<header class="list-heading">
+  <div class="list-heading-copy">
+    <p class="section-eyebrow">Administración del consultorio</p>
+    <h1><span class="page-title-icon"><i class="bi bi-{{ icono }}" aria-hidden="true"></i></span><span>{{ titulo }}</span>
+      <span class="badge fs-6 align-middle" aria-label="{{ total }} registros">{{ total }}</span></h1>
+    <p class="list-subtitle">Consulta y administra la información registrada en este módulo.</p>
+  </div>
+  <a href="{{ url_nuevo }}" class="btn btn-primary"><i class="bi bi-plus-lg" aria-hidden="true"></i> Nuevo registro</a>
+</header>
+{% if total %}
+<div class="table-toolbar">
+  <div class="table-search-wrap" data-table-search-controls hidden>
+    <label class="visually-hidden" for="list-search">Buscar en {{ titulo }}</label>
+    <span class="table-search-icon" aria-hidden="true"><i class="bi bi-search"></i></span>
+    <input type="search" class="form-control table-search" id="list-search" data-table-search
+           placeholder="Buscar en estos registros…" autocomplete="off" aria-controls="records-table"
+           aria-describedby="search-scope">
+    <button type="button" class="btn btn-link table-search-clear" data-table-clear hidden>Limpiar</button>
+  </div>
+  <p class="table-result-count" data-table-count role="status" aria-live="polite" data-total="{{ total }}">{{ total }} {{ 'registro' if total == 1 else 'registros' }}</p>
 </div>
+<p class="search-scope" id="search-scope" hidden>La búsqueda filtra únicamente los registros cargados en esta lista.</p>
+<div class="table-no-results" data-table-no-results role="status" hidden>
+  <i class="bi bi-search" aria-hidden="true"></i>
+  <span>No hay coincidencias. Prueba con otro término de búsqueda.</span>
+</div>
+{% endif %}
+{% endmacro %}
+
+{# Encabezado común para formularios de creación y edición #}
+{% macro encabezado_formulario(titulo, icono, url_listado, descripcion) %}
+<header class="form-page-heading">
+  <div class="form-heading-copy">
+    <p class="section-eyebrow">Administración del consultorio</p>
+    <h1><span class="page-title-icon"><i class="bi bi-{{ icono }}" aria-hidden="true"></i></span>{{ titulo }}</h1>
+    <p>{{ descripcion }}</p>
+  </div>
+  <a class="btn btn-outline-secondary" href="{{ url_listado }}"><i class="bi bi-arrow-left" aria-hidden="true"></i> Volver al listado</a>
+</header>
 {% endmacro %}
 
 {# Botones Editar / Eliminar de cada fila. Eliminar usa POST y pide confirmación. #}
@@ -14,8 +48,8 @@
     <i class="bi bi-pencil"></i>
   </a>
   <form method="post" action="{{ url_eliminar }}"
-        data-confirmacion="{{ ('¿Eliminar ' ~ descripcion ~ '?')|e }}"
-        onsubmit="return confirm(this.dataset.confirmacion);">
+        data-confirm-form data-confirm-message="¿Deseas eliminar {{ descripcion }}?"
+        onsubmit="return this.dataset.confirmEnhanced === 'true' || window.confirm(this.dataset.confirmMessage);">
     <button type="submit" class="btn btn-sm btn-outline-danger" title="Eliminar" aria-label="Eliminar {{ descripcion }}">
       <i class="bi bi-trash"></i>
     </button>

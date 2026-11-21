@@ -2,7 +2,7 @@
 {% import "_macros.html" as m %}
 {% block title %}{{ titulo }}{% endblock %}
 {% block content %}
-<div class="form-page-heading"><h1>{{ titulo }}</h1></div>
+{{ m.encabezado_formulario(titulo, 'person-badge-fill', url_for('medicos.listar'), 'Mantén actualizados los datos profesionales y de contacto.') }}
 <div class="card form-card"><div class="card-body">
   <form method="post" novalidate>
     <fieldset class="form-section">

@@ -2,7 +2,7 @@
 {% import "_macros.html" as m %}
 {% block title %}{{ titulo }}{% endblock %}
 {% block content %}
-<div class="form-page-heading"><h1>{{ titulo }}</h1></div>
+{{ m.encabezado_formulario(titulo, 'journal-medical', url_for('especialidades.listar'), 'Registra la información de una especialidad médica.') }}
 <div class="card form-card"><div class="card-body">
   <form method="post" novalidate>
     <div class="mb-3">
@@ -12,7 +12,7 @@
     </div>
     <div class="mb-3">
       <label for="descripcion" class="form-label">Descripción</label>
-      <textarea class="form-control" id="descripcion" name="descripcion" rows="3">{{ item.descripcion or '' }}</textarea>
+      <textarea class="form-control" id="descripcion" name="descripcion" rows="3" maxlength="200">{{ item.descripcion or '' }}</textarea>
     </div>
     {{ m.botones_form(url_for('especialidades.listar')) }}
   </form>

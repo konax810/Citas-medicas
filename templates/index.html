@@ -2,9 +2,12 @@
 {% block title %}Inicio{% endblock %}
 {% block content %}
 <section class="dashboard-intro">
-  <p class="text-uppercase small fw-semibold text-secondary mb-2">Administración del consultorio</p>
-  <h1 class="h2 mb-2">Panel de gestión</h1>
-  <p class="text-secondary mb-0">Consulta y administra la información de tu consultorio desde un solo lugar.</p>
+  <div class="dashboard-intro-copy">
+    <p class="section-eyebrow">Administración del consultorio</p>
+    <h1 class="mb-2">Panel de gestión</h1>
+    <p class="text-secondary mb-0">Consulta y administra la información de tu consultorio desde un solo lugar.</p>
+  </div>
+  <a class="btn btn-primary dashboard-primary-action" href="{{ url_for('citas.listar') }}"><i class="bi bi-calendar-check me-1" aria-hidden="true"></i> Consultar citas</a>
 </section>
 
 {% set tarjetas = [
@@ -29,5 +32,32 @@
   </div>
   {% endfor %}
 </div>
+
+<section class="dashboard-quick-actions" aria-labelledby="quick-actions-title">
+  <div class="quick-actions-heading">
+    <div>
+      <p class="section-eyebrow">Accesos directos</p>
+      <h2 id="quick-actions-title" class="h5 mb-0">Acciones frecuentes</h2>
+    </div>
+    <span class="quick-actions-note">Continúa con una tarea habitual</span>
+  </div>
+  <div class="quick-actions-grid">
+    <a class="quick-action" href="{{ url_for('citas.crear') }}">
+      <span class="quick-action-icon"><i class="bi bi-calendar2-plus" aria-hidden="true"></i></span>
+      <span><strong>Nueva cita</strong><small>Programar una atención</small></span>
+      <i class="bi bi-arrow-up-right ms-auto" aria-hidden="true"></i>
+    </a>
+    <a class="quick-action" href="{{ url_for('pacientes.crear') }}">
+      <span class="quick-action-icon"><i class="bi bi-person-plus" aria-hidden="true"></i></span>
+      <span><strong>Nuevo paciente</strong><small>Registrar sus datos</small></span>
+      <i class="bi bi-arrow-up-right ms-auto" aria-hidden="true"></i>
+    </a>
+    <a class="quick-action" href="{{ url_for('medicos.crear') }}">
+      <span class="quick-action-icon"><i class="bi bi-person-badge" aria-hidden="true"></i></span>
+      <span><strong>Nuevo médico</strong><small>Agregar al equipo</small></span>
+      <i class="bi bi-arrow-up-right ms-auto" aria-hidden="true"></i>
+    </a>
+  </div>
+</section>
 
 {% endblock %}
