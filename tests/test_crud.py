@@ -8,6 +8,7 @@ y recrea las tablas.
 Ejecutar explícitamente este archivo con: python -m pytest -v tests/test_crud.py
 """
 from contextlib import closing
+from datetime import datetime, timedelta
 from decimal import Decimal
 from html import unescape
 import os
@@ -745,6 +746,45 @@ def test_PF_13_citas_ciclo_crud_listado_y_rutas(
     client, test_config, padres_prueba, registros_prueba
 ):
     comprobar_paginas_principales(client)
+
+    fecha_hoy_futura = (datetime.now() + timedelta(minutes=5)).strftime(
+        "%Y-%m-%dT%H:%M"
+    )
+    respuesta = client.post(
+        "/citas/nuevo",
+        data=datos_cita(
+            registros_prueba,
+            padres_prueba,
+            fecha_hora=fecha_hoy_futura,
+            estado_cita="Atendida",
+        ),
+        follow_redirects=True,
+    )
+    assert "No se puede marcar como atendida una cita futura" in textos_alertas(
+        respuesta
+    )
+    assert sql(
+        test_config,
+        "SELECT COUNT(*) FROM citas WHERE observaciones = %s",
+        (registros_prueba["etiqueta"],),
+    )[0] == 0
+
+    respuesta = client.post(
+        "/citas/nuevo",
+        data=datos_cita(
+            registros_prueba, padres_prueba, estado_cita="Atendida"
+        ),
+        follow_redirects=True,
+    )
+    assert "No se puede marcar como atendida una cita futura" in textos_alertas(
+        respuesta
+    )
+    assert sql(
+        test_config,
+        "SELECT COUNT(*) FROM citas WHERE observaciones = %s",
+        (registros_prueba["etiqueta"],),
+    )[0] == 0
+
     id_registro = crear_cita(client, test_config, registros_prueba, padres_prueba)
     assert registros_prueba["etiqueta"] in client.get(
         "/citas/"
@@ -756,7 +796,40 @@ def test_PF_13_citas_ciclo_crud_listado_y_rutas(
     respuesta = client.post(
         f"/citas/{id_registro}/editar",
         data=datos_cita(
+            registros_prueba, padres_prueba, estado_cita="Cancelada"
+        ),
+        follow_redirects=True,
+    )
+    assert "Cita médica actualizada correctamente" in respuesta.get_data(as_text=True)
+    assert sql(
+        test_config,
+        "SELECT estado_cita FROM citas WHERE id_cita = %s",
+        (id_registro,),
+    )[0] == "Cancelada"
+
+    respuesta = client.post(
+        f"/citas/{id_registro}/editar",
+        data=datos_cita(
             registros_prueba, padres_prueba, estado_cita="Atendida"
+        ),
+        follow_redirects=True,
+    )
+    assert "No se puede marcar como atendida una cita futura" in textos_alertas(
+        respuesta
+    )
+    assert sql(
+        test_config,
+        "SELECT estado_cita FROM citas WHERE id_cita = %s",
+        (id_registro,),
+    )[0] == "Cancelada"
+
+    respuesta = client.post(
+        f"/citas/{id_registro}/editar",
+        data=datos_cita(
+            registros_prueba,
+            padres_prueba,
+            fecha_hora="2000-01-01T10:00",
+            estado_cita="Atendida",
         ),
         follow_redirects=True,
     )

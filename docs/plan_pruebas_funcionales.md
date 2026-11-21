@@ -2,7 +2,7 @@
 
 ## Alcance y resultado de ejecución
 
-Plan de 15 casos, tres por tabla, acorde con la rúbrica. La salida de `pytest --collect-only` confirmó **15 casos recopilados**. La ejecución completa se hizo con `TEST_DB_NAME=consultorio_medico_test_db`, distinta de la base de desarrollo `consultorio_medico_db`: **15 aprobadas, 0 fallidas** (`15 passed in 19.56s`).
+Plan de 15 casos, tres por tabla, acorde con la rúbrica. La salida de `pytest --collect-only` confirmó **15 casos recopilados**. La última ejecución completa documentada, anterior a la corrección de PF-13, se hizo con `TEST_DB_NAME=consultorio_medico_test_db`, distinta de la base de desarrollo `consultorio_medico_db`: **15 aprobadas, 0 fallidas** (`15 passed in 19.56s`). PF-13 fue actualizado para cubrir la regla de estados por fecha y está pendiente de reejecución con una base de pruebas.
 
 Los resultados de esta columna corresponden a aserciones reales de pytest; se indica la prueba automatizada que los demuestra. Las capturas de pantalla solicitadas aún están pendientes: no se registran como evidencia existente ni se presentan como si se hubieran tomado. Cuando se obtengan, deben guardarse en `docs/evidencias/` con los nombres indicados.
 
@@ -114,11 +114,11 @@ Los resultados de esta columna corresponden a aserciones reales de pytest; se in
 
 ### PF-13 — Ciclo CRUD de cita
 - **Tabla:** `citas`
-- **Operación/escenario:** Crear una cita, comprobarla en el listado, cambiar estado y eliminarla.
-- **Datos de entrada:** Fecha `2099-01-01T10:00`, paciente/servicio/médico existentes, estado `Programada`; edición a `Atendida`.
-- **Resultado esperado:** La cita aparece en el listado, se persiste el estado actualizado y se elimina correctamente.
-- **Resultado obtenido real:** `test_PF_13_citas_ciclo_crud_listado_y_rutas` verificó creación, listado, formulario de edición, 404 para ID inexistente, estado actualizado persistido y eliminación.
-- **Evidencia:**  ![](evidencias/pruebas_pytest.png).
+- **Operación/escenario:** Intentar crear una cita futura como atendida, crearla como programada, comprobarla en el listado, cancelarla y luego intentar marcarla como atendida; finalmente moverla al pasado, marcarla como atendida y eliminarla.
+- **Datos de entrada:** Fecha futura `2099-01-01T10:00`, paciente/servicio/médico existentes y estado inicial `Programada`.
+- **Resultado esperado:** Se rechaza crear o editar una cita futura como `Atendida`, incluidas las citas de hoy cuya hora aún no llega; el registro no se inserta ni se modifica. Se permite guardar la cita futura como `Programada` o `Cancelada`. Una fecha pasada sí permite cambiar el estado a `Atendida`.
+- **Verificación automatizada:** `test_PF_13_citas_ciclo_crud_listado_y_rutas` cubre la validación de estado por fecha, la persistencia de los cambios permitidos y la eliminación; queda pendiente ejecutarla con una base de pruebas.
+- **Evidencia:** Pendiente de actualizar después de ejecutar PF-13.
 
 ### PF-14 — Fecha, relaciones y estado inválidos
 - **Tabla:** `citas`

@@ -1,4 +1,6 @@
 """CRUD de la tabla citas (FK a pacientes, servicios_medicos y medicos)."""
+from datetime import datetime
+
 from flask import Blueprint, abort, flash, redirect, render_template, request, url_for
 
 import validators as v
@@ -21,6 +23,12 @@ def _leer_formulario(form):
     }
     if datos["estado_cita"] and datos["estado_cita"] not in ESTADOS_CITA:
         errores.append("Estado de cita no válido.")
+    elif (
+        datos["estado_cita"] == "Atendida"
+        and datos["fecha_hora"] is not None
+        and datos["fecha_hora"] > datetime.now()
+    ):
+        errores.append("No se puede marcar como atendida una cita futura.")
     return datos, errores
 
 

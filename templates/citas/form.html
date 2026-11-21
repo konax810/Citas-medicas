@@ -16,7 +16,6 @@
         <div class="col-md-6">
           <label for="estado_cita" class="form-label">Estado de la cita *</label>
           <select class="form-select" id="estado_cita" name="estado_cita" required>
-            {% set estados = ['Programada', 'Atendida', 'Cancelada'] %}
             {% for est in estados %}
               <option value="{{ est }}" {{ 'selected' if (item.estado_cita == est) or (not item.estado_cita and est == 'Programada') }}>{{ est }}</option>
             {% endfor %}
