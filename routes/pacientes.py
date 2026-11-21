@@ -26,7 +26,6 @@ def _leer_formulario(form):
         "email": v.email(form, "email", "Email", errores),
     }
 
-    # Validaciones para asegurar que coincidan con las restricciones CHECK de PostgreSQL
     if datos["tipo_documento"] and datos["tipo_documento"] not in TIPOS_DOCUMENTO:
         errores.append("Tipo de documento no válido.")
 
@@ -35,7 +34,7 @@ def _leer_formulario(form):
 
     if datos["rh"] and datos["rh"] not in ['O+', 'O-', 'A+', 'A-', 'B+', 'B-', 'AB+', 'AB-']:
         errores.append("RH no válido.")
-    
+
     return datos, errores
 
 
@@ -47,6 +46,7 @@ def _render_form(item, titulo):
         tipos_documento=TIPOS_DOCUMENTO,
         hoy=date.today().isoformat(),
     )
+
 
 @bp.route("/")
 def listar():
@@ -68,7 +68,6 @@ def crear():
         datos, errores = _leer_formulario(request.form)
         if not errores:
             try:
-                # 🛠️ EDITADO AQUÍ: Se agregaron sexo y rh al INSERT
                 execute("""INSERT INTO pacientes (tipo_documento, numero_documento, nombre, apellido, sexo, rh, fecha_nacimiento, telefono, direccion, email)
                             VALUES (%(tipo_documento)s, %(numero_documento)s, %(nombre)s, %(apellido)s, %(sexo)s, %(rh)s, %(fecha_nacimiento)s, %(telefono)s, %(direccion)s, %(email)s)""",
                         datos)
@@ -91,7 +90,6 @@ def editar(id):
         datos, errores = _leer_formulario(request.form)
         if not errores:
             try:
-                # 🛠️ EDITADO AQUÍ: Se agregaron sexo y rh al UPDATE
                 execute("""UPDATE pacientes
                             SET tipo_documento   = %(tipo_documento)s,
                                 numero_documento = %(numero_documento)s,
@@ -104,7 +102,7 @@ def editar(id):
                                 direccion        = %(direccion)s,
                                 email            = %(email)s
                             WHERE id_paciente = %(id)s""",
-                        {**datos, "id": id})
+                            {**datos, "id": id}),
                 flash("Paciente actualizado correctamente.", "success")
                 return redirect(url_for(".listar"))
             except DatabaseError as exc:
